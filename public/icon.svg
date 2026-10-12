@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="SmartFlow Duo">
+  <defs>
+    <linearGradient id="bg" x1="16" y1="12" x2="112" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#118c80"/>
+      <stop offset="1" stop-color="#075a59"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="31" y1="32" x2="94" y2="96" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d5fbeb"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="34" fill="url(#bg)"/>
+  <path d="M30 63.5 45.5 79 76 48.5" fill="none" stroke="url(#shine)" stroke-linecap="round" stroke-linejoin="round" stroke-width="9"/>
+  <path d="m55 78 8 8 34-34" fill="none" stroke="#a9f0d5" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+  <circle cx="28" cy="35" r="4" fill="#ffd28d"/>
+  <circle cx="100" cy="92" r="3" fill="#ffd28d"/>
+</svg>
