@@ -1,0 +1,18 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+
+# Local environment/secrets
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Test/build caches
+*.tsbuildinfo
