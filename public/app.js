@@ -1,6 +1,13 @@
 // Live Casino Math Companion - Core Application Logic
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Register Service Worker for PWA
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(err => {
+      console.log('SW registration failed:', err);
+    });
+  }
+
   // Initialize Lucide Icons
   if (window.lucide) {
     window.lucide.createIcons();
