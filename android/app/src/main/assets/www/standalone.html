@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CasinoMath Live Companion - গাণিতিক গাইড ও ডিসিপ্লিন</title>
+  <meta name="theme-color" content="#0a0e17">
+  <style>
+    /* CSS Variables for Dynamic Dark / Light Themes */
+    :root[data-theme="dark"] {
+      --bg-base: #0a0e17;
+      --bg-card: #111827;
+      --bg-hover: #1f2937;
+      --bg-input: #1e293b;
+      --border-color: #1f2937;
+      --border-subtle: #374151;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-sub: #64748b;
+      --banner-bg: #111827;
+    }
+    :root[data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-hover: #f8fafc;
+      --bg-input: #f8fafc;
+      --border-color: #e2e8f0;
+      --border-subtle: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-sub: #64748b;
+      --banner-bg: #e2e8f0;
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select {
+      font-family: inherit;
+      font-size: inherit;
+    }
+    
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #10b981, #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .brand-icon svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; }
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-live {
+      font-size: 10px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .btn-action:hover { background-color: var(--border-subtle); }
+    .btn-action.btn-danger {
+      background-color: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+    .btn-action.btn-accent {
+      background-color: rgba(37, 99, 235, 0.15);
+      border-color: rgba(37, 99, 235, 0.3);
+      color: #3b82f6;
+    }
+    .btn-action.btn-success {
+      background-color: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #10b981;
+    }
+
+    /* Tabs Bar */
+    .tabs-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 16px;
+      border-top: 1px solid var(--border-color);
+      scrollbar-width: none;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      background-color: var(--bg-hover);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .nav-tab.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #3b82f6;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Live Emergency Banner */
+    #liveAlertBanner {
+      background-color: var(--banner-bg);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 16px;
+      transition: all 0.3s;
+    }
+    .banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #10b981;
+      flex-shrink: 0;
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      white-space: nowrap;
+    }
+    .banner-text {
+      font-size: 12px;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .timer-badge {
+      font-family: monospace;
+      font-size: 12px;
+      background: var(--bg-hover);
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      color: #f59e0b;
+      white-space: nowrap;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 360px 1fr;
+      }
+    }
+
+    /* Card Styling */
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 16px;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 14px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-sub {
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+
+    /* Forms & Inputs */
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .form-row {
+      display: flex;
+      gap: 8px;
+    }
+    .input-text {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-family: monospace;
+      outline: none;
+    }
+    .input-text:focus {
+      border-color: #3b82f6;
+    }
+    .select-dropdown {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px;
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+    }
+    .range-slider {
+      width: 100%;
+      accent-color: #3b82f6;
+      margin: 6px 0;
+    }
+    .range-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 600px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .stat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .stat-val {
+      font-size: 18px;
+      font-weight: 800;
+      font-family: monospace;
+      margin-top: 4px;
+      color: var(--text-main);
+    }
+    .stat-sub {
+      font-size: 10px;
+      color: var(--text-sub);
+      margin-top: 2px;
+      font-family: monospace;
+    }
+
+    /* Big Touch Action Buttons */
+    .big-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .btn-touch {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 12px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.1s, opacity 0.15s;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    .btn-touch:active {
+      transform: scale(0.97);
+    }
+    .btn-win {
+      background: linear-gradient(135deg, #059669, #047857);
+    }
+    .btn-loss {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    .touch-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .touch-sub {
+      font-size: 10px;
+      opacity: 0.85;
+    }
+    .touch-preview {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    /* Round History Chips */
+    .history-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 32px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .chip {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 700;
+    }
+    .chip-win {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .chip-loss {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+
+    /* Warning boxes */
+    .alert-box {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #ef4444;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .alert-box strong { color: var(--text-main); }
+
+    /* Button grids for Blackjack & Roulette */
+    .btn-grid-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    @media (min-width: 600px) {
+      .btn-grid-row {
+        grid-template-columns: repeat(10, 1fr);
+      }
+    }
+    .btn-pick {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 8px 4px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: monospace;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-pick.active {
+      background-color: #2563eb;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+    .decision-display {
+      background: var(--bg-hover);
+      border: 2px solid #3b82f6;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 14px;
+    }
+    .decision-action {
+      font-size: 28px;
+      font-weight: 900;
+      color: #10b981;
+      margin: 8px 0;
+      font-family: monospace;
+    }
+    .decision-exp {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-family: monospace;
+    }
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    th {
+      background: var(--bg-hover);
+      color: var(--text-muted);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Floating Draggable Widget (On Web / Mobile) */
+    #webFloatingWidget {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: rgba(17, 24, 39, 0.95);
+      border: 2px solid #3b82f6;
+      border-radius: 16px;
+      padding: 14px;
+      width: 280px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      touch-action: none;
+    }
+    #webFloatingWidget.minimized {
+      width: auto;
+      padding: 8px 12px;
+      border-radius: 25px;
+    }
+
+    /* Utility */
+    .text-emerald { color: #10b981; }
+    .text-rose { color: #ef4444; }
+    .text-amber { color: #f59e0b; }
+    .text-blue { color: #3b82f6; }
+    .hidden { display: none !important; }
+    .mt-2 { margin-top: 8px; }
+    .mt-4 { margin-top: 16px; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-top container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">
+            <span id="t_app_title">CasinoMath Guide</span>
+            <span class="badge-live">LIVE</span>
+          </div>
+          <div class="brand-sub" id="t_app_sub">গাণিতিক সম্ভাবনা ও ব্যাংক রোল ডিসিপ্লিন</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Floating Overlay Trigger -->
+        <button id="floatingBtn" class="btn-action btn-success" title="অন্য গেমের ওপর ভাসমান উইজেট চালু করুন">
+          🎯 <span id="t_floating_btn">ভাসমান মোড</span>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggleBtn" class="btn-action" title="ডার্ক ও লাইট থিম পরিবর্তন">
+          <span id="themeIcon">🌙</span>
+        </button>
+
+        <!-- Language Toggle -->
+        <button id="langToggleBtn" class="btn-action btn-accent" title="ভাষা পরিবর্তন (বাং / EN)">
+          <span id="langLabel">বাং / EN</span>
+        </button>
+
+        <!-- Audio Toggle -->
+        <button id="audioToggleBtn" class="btn-action">
+          <span id="audioLabel">অডিও: চালু</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="resetSessionBtn" class="btn-action btn-danger">রিসেট</button>
+      </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-bar container">
+      <button class="nav-tab active" data-tab="hud">📊 <span id="t_tab_hud">লাইভ HUD</span></button>
+      <button class="nav-tab" data-tab="crash">🚀 <span id="t_tab_crash">ক্র্যাশ রাডার</span></button>
+      <button class="nav-tab" data-tab="blackjack">♠️ <span id="t_tab_bj">ব্ল্যাকজ্যাক গাইড</span></button>
+      <button class="nav-tab" data-tab="roulette">🎡 <span id="t_tab_roulette">রুলেট ভ্রান্তি</span></button>
+      <button class="nav-tab" data-tab="martingale">⚠️ <span id="t_tab_mg">মার্টিঙ্গেল টেস্ট</span></button>
+      <button class="nav-tab" data-tab="settings">⚙️ <span id="t_tab_settings">সেটিংস ও গাইড</span></button>
+    </div>
+  </header>
+
+  <!-- Live Sticky Emergency Alert Banner -->
+  <div id="liveAlertBanner">
+    <div class="container banner-content">
+      <div class="banner-left">
+        <span class="status-dot" id="alertStatusDot"></span>
+        <span class="status-badge" id="alertStatusBadge">সেশন নিরাপদ</span>
+        <span class="banner-text" id="alertMessageText">প্রতি বাজিতে ১%-২% এর বেশি ঝুঁকি নেবেন না।</span>
+      </div>
+      <div class="timer-badge" id="headerTimerVal">00:00</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container">
+
+    <!-- ================= TAB 1: LIVE HUD ================= -->
+    <section id="tab-hud" class="tab-pane">
+      <div class="grid-2">
+        
+        <!-- Setup Column -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💰 <span id="t_bankroll_title">ব্যাংক রোল সেটআপ</span></span>
+            <span class="card-sub" id="t_calc_label">ক্যালকুলেটর</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" id="t_start_bal_label">প্রারম্ভিক ব্যালেন্স (Starting Bankroll)</label>
+            <div class="form-row">
+              <input type="number" id="inputStartBankroll" value="5000" min="100" step="100" class="input-text">
+              <select id="selectCurrency" class="select-dropdown">
+                <option value="৳">৳ BDT</option>
+                <option value="$">$ USD</option>
+                <option value="₹">₹ INR</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="alert-box" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+            <div style="font-weight: 700; margin-bottom: 2px;" id="t_unit_bet_title">নিরাপদ বাজি সাইজ (১% - ২% রুল):</div>
+            <div id="displayUnitBet" style="font-size: 16px; font-weight: 800; font-family: monospace; color: #10b981;">৳ ৫০ - ৳ ১০০</div>
+            <div style="font-size: 10px; margin-top: 4px; color: var(--text-muted);" id="t_unit_bet_desc">এর বেশি বাজি ধরলে দ্রুত ব্যালেন্স শেষ হওয়ার ঝুঁকি তৈরি হয়।</div>
+          </div>
+
+          <div class="form-group">
+            <div class="range-info">
+              <span class="text-rose" id="t_sl_label">স্টপ-লস (Stop-Loss)</span>
+              <span id="stopLossPctLabel" class="text-rose font-bold">-30%</span>
+            </div>
+            <input type="range" id="rangeStopLoss" min="10" max="60" value="30" step="5" class="range-slider" style="accent-color: #ef4444;">
+            <div style="font-size: 11px; color: var(--text-muted);"><span id="t_sl_target_desc">ব্যালেন্স</span> <span id="stopLossTargetVal" class="text-rose" style="font-weight: 700;">৳ ৩৫০০</span> <span id="t_sl_stop_desc">হলে খেলা বন্ধ</span></div>
+          </div>
+
+          <div class="form-group">
+            <div class="range-info">
+              <span class="text-emerald" id="t_tp_label">টেক-প্রফিট (Take-Profit)</span>
+              <span id="takeProfitPctLabel" class="text-emerald font-bold">+25%</span>
+            </div>
+            <input type="range" id="rangeTakeProfit" min="10" max="100" value="25" step="5" class="range-slider" style="accent-color: #10b981;">
+            <div style="font-size: 11px; color: var(--text-muted);"><span id="t_tp_target_desc">ব্যালেন্স</span> <span id="takeProfitTargetVal" class="text-emerald" style="font-weight: 700;">৳ ৬২৫০</span> <span id="t_tp_cashout_desc">হলে ক্যাশআউট</span></div>
+          </div>
+
+          <div class="form-group">
+            <div class="range-info">
+              <span class="text-amber" id="t_max_time_label">সর্বোচ্চ খেলার সময়</span>
+              <span id="sessionMaxTimeLabel" class="text-amber font-bold">২০ মিনিট</span>
+            </div>
+            <input type="range" id="rangeMaxTime" min="10" max="45" value="20" step="5" class="range-slider" style="accent-color: #f59e0b;">
+          </div>
+
+          <button id="applySetupBtn" class="btn-action btn-accent" style="width: 100%; padding: 10px; justify-content: center; font-size: 13px;">
+            <span id="t_apply_btn">সেশন আপডেট / রিস্টার্ট</span>
+          </button>
+        </div>
+
+        <!-- Live Scoreboard Column -->
+        <div>
+          
+          <!-- 4 Stat Counters -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label" id="t_cur_bal_lbl">বর্তমান ব্যালেন্স</div>
+              <div id="currentBalanceDisplay" class="stat-val text-emerald">৳ ৫,০০০</div>
+              <div id="bankrollChangeSubtext" class="stat-sub">শুরু: ৳ ৫,০০০</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label" id="t_pnl_lbl">নেট লাভ / ক্ষতি</div>
+              <div id="netPnLDisplay" class="stat-val">৳ ০</div>
+              <div id="roiPctDisplay" class="stat-sub">ROI: 0.0%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label" id="t_winrate_lbl">উইন রেট</div>
+              <div id="winRateDisplay" class="stat-val text-blue">০%</div>
+              <div id="totalRoundsDisplay" class="stat-sub">০ রাউন্ড</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label" id="t_time_lbl">সেশন সময়</div>
+              <div id="sessionTimerDisplay" class="stat-val text-amber">০০:০০</div>
+              <div id="sessionRiskStageDisplay" class="stat-sub text-emerald">নিরাপদ উইন্ডো</div>
+            </div>
+          </div>
+
+          <!-- Big Live Action Buttons -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">⚡ <span id="t_log_title">১-ট্যাপে রেজাল্ট এন্ট্রি</span></span>
+              <div style="display: flex; align-items: center; gap: 4px; font-size: 11px;">
+                <span style="color: var(--text-muted);" id="t_bet_lbl">বাজি:</span>
+                <input type="number" id="quickBetAmount" value="100" min="10" step="10" style="width: 70px; background: var(--bg-input); border: 1px solid var(--border-subtle); color: var(--text-main); padding: 4px; border-radius: 6px; text-align: center; font-family: monospace;">
+                <span class="currencyLabel">৳</span>
+              </div>
+            </div>
+
+            <div class="big-actions-grid">
+              <button id="btnLogWin" class="btn-touch btn-win">
+                <div>
+                  <div class="touch-title">+ WIN (<span id="t_win_txt">জিতেছেন</span>)</div>
+                  <div class="touch-sub" id="t_win_sub">ব্যালেন্স বৃদ্ধি</div>
+                </div>
+                <div id="winBtnPreviewVal" class="touch-preview">+৳১০০</div>
+              </button>
+
+              <button id="btnLogLoss" class="btn-touch btn-loss">
+                <div>
+                  <div class="touch-title">- LOSS (<span id="t_loss_txt">হেরেছেন</span>)</div>
+                  <div class="touch-sub" id="t_loss_sub">স্টপ-লস ট্র্যাকিং</div>
+                </div>
+                <div id="lossBtnPreviewVal" class="touch-preview">-৳১০০</div>
+              </button>
+            </div>
+
+            <!-- Loss Chasing Danger Warning -->
+            <div id="lossChasingWarningBox" class="alert-box hidden">
+              <strong>🚨 <span id="t_chase_alert_title">লস চেসিং অ্যালার্ট (Chasing Losses Detected)!</span></strong><br>
+              <span id="t_chase_alert_desc">আপনি পরপর ৩ বার হেরেছেন। কখনোই লস রিকভার করার লোভে বাজি বাড়াবেন না! আবেগ নিয়ন্ত্রণ করুন।</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);">
+              <span style="color: var(--text-muted);" id="t_history_lbl">সাম্প্রতিক রাউন্ড হিস্ট্রি:</span>
+              <button id="btnUndoRound" class="btn-action" style="padding: 4px 8px;" id="t_undo_btn">আগের রাউন্ড মুছুন</button>
+            </div>
+
+            <div id="roundHistoryChips" class="history-strip">
+              <span style="color: var(--text-sub); font-size: 11px;">উপরে WIN বা LOSS বাটনে চাপুন।</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= TAB 2: CRASH RADAR ================= -->
+    <section id="tab-crash" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🚀 <span id="t_crash_title">ক্র্যাশ / এভিয়েটর প্রোবাবিলিটি রাডার</span></span>
+          <span class="card-sub">RTP: ~97.0%</span>
+        </div>
+
+        <div style="margin: 16px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="form-label" style="font-size: 13px;" id="t_target_mult_lbl">টার্গেট ক্যাশআউট মাল্টিপ্লায়ার:</label>
+            <span id="crashMultiplierVal" style="font-size: 24px; font-weight: 800; font-family: monospace; color: #f59e0b;">1.50x</span>
+          </div>
+          <input type="range" id="crashMultiplierSlider" min="1.05" max="10.0" value="1.50" step="0.05" class="range-slider" style="accent-color: #f59e0b;">
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label" id="t_win_chance_lbl">জেতার সম্ভাবনা (Win Chance)</div>
+            <div id="crashWinChanceText" class="stat-val text-emerald">64.7%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label" id="t_crash_risk_lbl">ক্র্যাশ বা হারার ঝুঁকি</div>
+            <div id="crashRiskChanceText" class="stat-val text-rose">35.3%</div>
+          </div>
+        </div>
+
+        <div id="crashRiskAssessmentBox" class="alert-box" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+          <div id="crashRiskCategoryTitle" style="font-weight: 700; margin-bottom: 4px;">ঝুঁকি স্তর: মাঝারি / নিয়ন্ত্রণযোগ্য</div>
+          <p id="crashRiskAdviceText">১.৫০x এর নিচে অটো-ক্যাশআউট রাখলে ধারাবাহিকতা কিছুটা থাকে, তবে দীর্ঘক্ষণ খেললে ৩% হাউস এজ ঠিকই লস করাবে।</p>
+        </div>
+
+        <div class="card" style="background: var(--bg-hover); border-color: var(--border-subtle); font-size: 12px; color: var(--text-muted);">
+          <strong style="color: var(--text-main);" id="t_crash_fact_title">💡 গাণিতিক বাস্তবতা:</strong> <span id="t_crash_fact_desc">৫.০০x বা ১০.০০x মাল্টিপ্লায়ারে হারার ঝুঁকি ৮০% থেকে ৯২%। টেলিগ্রামের কোনো হ্যাক বট আগে থেকে ক্র্যাশ টাইম প্রেডিক্ট করতে পারে না।</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: BLACKJACK ================= -->
+    <section id="tab-blackjack" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">♠️ <span id="t_bj_title">ব্ল্যাকজ্যাক লাইভ বেসিক স্ট্র্যাটেজি</span></span>
+          <span class="card-sub" id="t_bj_sub">হাউস এজ মাত্র ০.৫%</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="t_dealer_up_lbl">১. ডিলারের দৃশ্যমান কার্ড (Dealer Upcard):</label>
+          <div class="btn-grid-row" id="dealerCardButtons">
+            <button class="btn-pick active" data-val="2">2</button>
+            <button class="btn-pick" data-val="3">3</button>
+            <button class="btn-pick" data-val="4">4</button>
+            <button class="btn-pick" data-val="5">5</button>
+            <button class="btn-pick" data-val="6">6</button>
+            <button class="btn-pick" data-val="7">7</button>
+            <button class="btn-pick" data-val="8">8</button>
+            <button class="btn-pick" data-val="9">9</button>
+            <button class="btn-pick" data-val="10">10</button>
+            <button class="btn-pick" data-val="A">A</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" id="t_player_hand_lbl">২. আপনার হাতের কার্ড (Player Hand):</label>
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <button class="btn-action btn-accent active hand-type-btn" data-type="hard">হার্ড (Hard)</button>
+            <button class="btn-action hand-type-btn" data-type="soft">সফট (A,x)</button>
+            <button class="btn-action hand-type-btn" data-type="pairs">পেয়ার (Pairs)</button>
+          </div>
+          <div class="btn-grid-row" id="playerHandValuesGrid"></div>
+        </div>
+
+        <div class="decision-display" id="bjDecisionBox">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);" id="t_opt_action_lbl">গাণিতিক সেরা সিদ্ধান্ত (Optimal Action)</div>
+          <div class="decision-action" id="bjActionText">HIT (হিট)</div>
+          <div class="decision-exp" id="bjActionExplanation">ডিলারের আপকার্ডের বিরুদ্ধে এই স্কোরে হিট নিলে জেতার সম্ভাবনা সর্বোচ্চ থাকে।</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: ROULETTE ================= -->
+    <section id="tab-roulette" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎡 <span id="t_roulette_title">রুলেট ও জুয়াড়ির ভ্রান্তি (Gambler's Fallacy)</span></span>
+          <span class="card-sub" id="t_roulette_sub">স্বাধীন ঘটনা</span>
+        </div>
+
+        <div class="alert-box">
+          <strong id="t_roulette_warn_title">🚨 কেন পরপর ৫ বার RED আসার পরও BLACK আসবেই এমন কোনো নিশ্চয়তা নেই?</strong><br>
+          <span id="t_roulette_warn_desc">রুলেট চাকার কোনো মেমোরি বা স্মৃতি নেই। প্রতিটি স্পিন সম্পূর্ণ স্বাধীন (Independent Event)। ৬ষ্ঠ স্পিনেও লাল আসার সম্ভাবনা ঠিক আগের মতোই ৪৮.৬৫% এবং কালো আসার সম্ভাবনাও ৪৮.৬৫%।</span>
+        </div>
+
+        <div class="stats-grid mt-4">
+          <div class="stat-card" style="border-left: 4px solid #ef4444;">
+            <div class="stat-label">RED (লাল)</div>
+            <div class="stat-val text-rose">৪৮.৬৫%</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #94a3b8;">
+            <div class="stat-label">BLACK (কালো)</div>
+            <div class="stat-val">৪৮.৬৫%</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #10b981;">
+            <div class="stat-label">GREEN 0 (ক্যাসিনোর লাভ)</div>
+            <div class="stat-val text-emerald">২.৭০%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 5: MARTINGALE ================= -->
+    <section id="tab-martingale" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⚠️ <span id="t_mg_title">মার্টিঙ্গেল ডেথ সিমুলেটর</span></span>
+          <span class="card-sub" id="t_mg_sub">সর্বস্ব হারানোর ফাঁদ</span>
+        </div>
+
+        <div class="alert-box">
+          <span id="t_mg_desc">মার্টিঙ্গেল নিয়মে হারলে বাজি দ্বিগুণ করা হয়। নিচে দেখুন কীভাবে মাত্র ৬-৭ রাউন্ড লসেই ব্যাংক রোল শূন্য হয়ে যায়:</span>
+        </div>
+
+        <div style="overflow-x: auto; margin-top: 12px;">
+          <table>
+            <thead>
+              <tr>
+                <th id="th_round">হারের রাউন্ড</th>
+                <th id="th_bet">প্রয়োজনীয় বাজি</th>
+                <th id="th_risked">মোট ঝুঁকির টাকা</th>
+                <th id="th_profit">জিতলে নিট লাভ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>রাউন্ড #১</td><td>৳ ১০০</td><td>৳ ১০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #২</td><td>৳ ২০০</td><td>৳ ৩০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #৩</td><td>৳ ৪০০</td><td>৳ ৭০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #৪</td><td>৳ ৮০০</td><td>৳ ১,৫০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #৫</td><td>৳ ১,৬০০</td><td>৳ ৩,১০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr style="background: rgba(239,68,68,0.2); color: #ef4444; font-weight: 700;">
+                <td>রাউন্ড #৬ 💥</td><td>৳ ৩,২০০</td><td>৳ ৬,৩০০</td><td>দেউলিয়া!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 6: SETTINGS & USER GUIDE ================= -->
+    <section id="tab-settings" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⚙️ <span id="t_settings_title">স্মার্ট সেটিংস ও ইউজার কন্ট্রোল</span></span>
+          <span class="card-sub">Preferences</span>
+        </div>
+
+        <!-- Preferences -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+          <div class="form-group">
+            <label class="form-label">🌐 ভাষা (Language)</label>
+            <select id="settingLanguageSelect" class="select-dropdown" style="width: 100%;">
+              <option value="bn">বাংলা (Bengali)</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">🎨 থিম (Theme)</label>
+            <select id="settingThemeSelect" class="select-dropdown" style="width: 100%;">
+              <option value="dark">🌙 Dark Mode</option>
+              <option value="light">☀️ Light Mode</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Android Floating Mode Setup Guide -->
+        <div class="card" style="background: var(--bg-hover); border-color: var(--border-subtle);">
+          <div style="font-weight: 700; color: #10b981; margin-bottom: 8px;">
+            📱 অ্যান্ড্রয়েড ভাসমান উইজেট চালু করার নিয়ম:
+          </div>
+          <ol style="padding-left: 20px; line-height: 1.8; font-size: 12px; color: var(--text-main);">
+            <li>উপরে থাকা <strong>"🎯 ভাসমান মোড"</strong> বাটনে চাপ দিন।</li>
+            <li>ফোনের সেটিংসে গিয়ে <strong>"Display over other apps" (অন্যান্য অ্যাপের উপর প্রদর্শন)</strong> অনুমতিটি চালু করুন।</li>
+            <li>অনুমতি দেওয়ার পর স্ক্রিনে একটি ছোট ড্র্যাগেবল বাবল চলে আসবে।</li>
+            <li>আপনি যখন ক্যাসিনো বা যেকোনো গেমে থাকবেন, বাবলটিতে ট্যাপ করে বাজি লগ করতে পারবেন এবং লাইভ গাইড দেখতে পারবেন।</li>
+          </ol>
+        </div>
+
+        <!-- Golden Rules -->
+        <div style="margin-top: 16px;">
+          <div style="font-weight: 700; color: var(--text-main); margin-bottom: 6px;">
+            🛡️ গাণিতিক ডিসিপ্লিন ও সতর্কতা:
+          </div>
+          <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 12px; color: var(--text-muted);">
+            <li>✅ <strong>লাভ হলে থামুন:</strong> ২০% বা ২৫% লাভ হলে সাথে সাথে ক্যাশআউট করে ওই দিনের মতো টেবিল ছাড়ুন।</li>
+            <li>✅ <strong>১%-২% বাজি সীমা:</strong> আপনার মোট বাজেটের ১-২% এর বেশি একক বাজি ধরলে ৩-৪ রাউন্ডেই ব্যালেন্স তলানিতে চলে যাবে।</li>
+            <li>❌ <strong>কোনো হ্যাক বট নেই:</strong> ক্যাসিনো রেজাল্ট সার্ভারে তৈরি হয়, কোনো অ্যাপ আগে থেকে ফলাফল জানে না।</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Mini Overlay for Web & Mobile -->
+  <div id="webFloatingWidget" class="hidden">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <span style="font-weight: 700; font-size: 12px; color: #10b981;">🎯 CM Live HUD</span>
+      <button id="closeWebFloatingBtn" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 14px;">✕</button>
+    </div>
+    <div style="font-family: monospace; font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 4px;" id="floatingBalDisplay">৳ ৫,০০০</div>
+    <div style="font-size: 10px; color: #10b981; margin-bottom: 8px;" id="floatingStatusDisplay">নিরাপদ উইন্ডো</div>
+    <div style="display: flex; gap: 6px;">
+      <button id="floatingBtnWin" style="flex: 1; background: #059669; color: #fff; border: none; border-radius: 8px; padding: 8px; font-weight: 700; cursor: pointer;">+ WIN</button>
+      <button id="floatingBtnLoss" style="flex: 1; background: #dc2626; color: #fff; border: none; border-radius: 8px; padding: 8px; font-weight: 700; cursor: pointer;">- LOSS</button>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine (100% Inline, Zero External CDN Dependency) -->
+  <script>
+    // Bilingual Localization Data Dictionary
+    let currentLang = 'bn';
+    const i18n = {
+      bn: {
+        app_title: 'CasinoMath Guide',
+        app_sub: 'গাণিতিক সম্ভাবনা ও ব্যাংক রোল ডিসিপ্লিন',
+        floating_btn: 'ভাসমান মোড',
+        tab_hud: 'লাইভ HUD',
+        tab_crash: 'ক্র্যাশ রাডার',
+        tab_bj: 'ব্ল্যাকজ্যাক গাইড',
+        tab_roulette: 'রুলেট ভ্রান্তি',
+        tab_mg: 'মার্টিঙ্গেল টেস্ট',
+        tab_settings: 'সেটিংস ও গাইড',
+        bankroll_title: 'ব্যাংক রোল সেটআপ',
+        calc_label: 'ক্যালকুলেটর',
+        start_bal_label: 'প্রারম্ভিক ব্যালেন্স (Starting Bankroll)',
+        unit_bet_title: 'নিরাপদ বাজি সাইজ (১% - ২% রুল):',
+        unit_bet_desc: 'এর বেশি বাজি ধরলে দ্রুত ব্যালেন্স শেষ হওয়ার ঝুঁকি তৈরি হয়।',
+        sl_label: 'স্টপ-লস (Stop-Loss)',
+        sl_target_desc: 'ব্যালেন্স',
+        sl_stop_desc: 'হলে খেলা বন্ধ',
+        tp_label: 'টেক-প্রফিট (Take-Profit)',
+        tp_target_desc: 'ব্যালেন্স',
+        tp_cashout_desc: 'হলে ক্যাশআউট',
+        max_time_label: 'সর্বোচ্চ খেলার সময়',
+        apply_btn: 'সেশন আপডেট / রিস্টার্ট',
+        cur_bal_lbl: 'বর্তমান ব্যালেন্স',
+        pnl_lbl: 'নেট লাভ / ক্ষতি',
+        winrate_lbl: 'উইন রেট',
+        time_lbl: 'সেশন সময়',
+        log_title: '১-ট্যাপে রেজাল্ট এন্ট্রি',
+        bet_lbl: 'বাজি:',
+        win_txt: 'জিতেছেন',
+        win_sub: 'ব্যালেন্স বৃদ্ধি',
+        loss_txt: 'হেরেছেন',
+        loss_sub: 'স্টপ-লস ট্র্যাকিং',
+        chase_alert_title: 'লস চেসিং অ্যালার্ট (Chasing Losses Detected)!',
+        chase_alert_desc: 'আপনি পরপর ৩ বার হেরেছেন। কখনোই লস রিকভার করার লোভে বাজি বাড়াবেন না! আবেগ নিয়ন্ত্রণ করুন।',
+        history_lbl: 'সাম্প্রতিক রাউন্ড হিস্ট্রি:',
+        undo_btn: 'আগের রাউন্ড মুছুন',
+        crash_title: 'ক্র্যাশ / এভিয়েটর প্রোবাবিলিটি রাডার',
+        target_mult_lbl: 'টার্গেট ক্যাশআউট মাল্টিপ্লায়ার:',
+        win_chance_lbl: 'জেতার সম্ভাবনা (Win Chance)',
+        crash_risk_lbl: 'ক্র্যাশ বা হারার ঝুঁকি',
+        crash_fact_title: '💡 গাণিতিক বাস্তবতা:',
+        crash_fact_desc: '৫.০০x বা ১০.০০x মাল্টিপ্লায়ারে হারার ঝুঁকি ৮০% থেকে ৯২%। টেলিগ্রামের কোনো হ্যাক বট আগে থেকে ক্র্যাশ টাইম প্রেডিক্ট করতে পারে না।',
+        bj_title: 'ব্ল্যাকজ্যাক লাইভ বেসিক স্ট্র্যাটেজি',
+        bj_sub: 'হাউস এজ মাত্র ০.৫%',
+        dealer_up_lbl: '১. ডিলারের দৃশ্যমান কার্ড (Dealer Upcard):',
+        player_hand_lbl: '২. আপনার হাতের কার্ড (Player Hand):',
+        opt_action_lbl: 'গাণিতিক সেরা সিদ্ধান্ত (Optimal Action)',
+        roulette_title: 'রুলেট ও জুয়াড়ির ভ্রান্তি (Gambler's Fallacy)',
+        roulette_sub: 'স্বাধীন ঘটনা',
+        roulette_warn_title: '🚨 কেন পরপর ৫ বার RED আসার পরও BLACK আসবেই এমন কোনো নিশ্চয়তা নেই?',
+        roulette_warn_desc: 'রুলেট চাকার কোনো মেমোরি বা স্মৃতি নেই। প্রতিটি স্পিন সম্পূর্ণ স্বাধীন (Independent Event)। ৬ষ্ঠ স্পিনেও লাল আসার সম্ভাবনা ঠিক আগের মতোই ৪৮.৬৫% এবং কালো আসার সম্ভাবনাও ৪৮.৬৫%।',
+        mg_title: 'মার্টিঙ্গেল ডেথ সিমুলেটর',
+        mg_sub: 'সর্বস্ব হারানোর ফাঁদ',
+        mg_desc: 'মার্টিঙ্গেল নিয়মে হারলে বাজি দ্বিগুণ করা হয়। নিচে দেখুন কীভাবে মাত্র ৬-৭ রাউন্ড লসেই ব্যাংক রোল শূন্য হয়ে যায়:',
+        settings_title: 'স্মার্ট সেটিংস ও ইউজার কন্ট্রোল'
+      },
+      en: {
+        app_title: 'CasinoMath Guide',
+        app_sub: 'Mathematical Probability & Bankroll Discipline',
+        floating_btn: 'Floating Mode',
+        tab_hud: 'Live HUD',
+        tab_crash: 'Crash Radar',
+        tab_bj: 'Blackjack Guide',
+        tab_roulette: 'Roulette Fallacy',
+        tab_mg: 'Martingale Test',
+        tab_settings: 'Settings & Guide',
+        bankroll_title: 'Bankroll Setup',
+        calc_label: 'Calculator',
+        start_bal_label: 'Starting Bankroll',
+        unit_bet_title: 'Safe Unit Bet (1% - 2% Rule):',
+        unit_bet_desc: 'Betting more than this exponentially increases the risk of ruin.',
+        sl_label: 'Stop-Loss Limit',
+        sl_target_desc: 'Balance at',
+        sl_stop_desc: 'Quit Session',
+        tp_label: 'Take-Profit Target',
+        tp_target_desc: 'Balance at',
+        tp_cashout_desc: 'Cash Out & Walk Away',
+        max_time_label: 'Max Session Time',
+        apply_btn: 'Update / Restart Session',
+        cur_bal_lbl: 'Current Balance',
+        pnl_lbl: 'Net Profit / Loss',
+        winrate_lbl: 'Win Rate',
+        time_lbl: 'Session Time',
+        log_title: '1-Tap Round Logger',
+        bet_lbl: 'Bet:',
+        win_txt: 'WIN',
+        win_sub: 'Balance Increase',
+        loss_txt: 'LOSS',
+        loss_sub: 'Stop-Loss Tracking',
+        chase_alert_title: 'Loss Chasing Detected!',
+        chase_alert_desc: 'You lost 3 rounds in a row. Never double your bet to recover losses! Stay disciplined.',
+        history_lbl: 'Recent Rounds:',
+        undo_btn: 'Undo Round',
+        crash_title: 'Crash / Aviator Probability Radar',
+        target_mult_lbl: 'Target Cashout Multiplier:',
+        win_chance_lbl: 'Probability of Win',
+        crash_risk_lbl: 'Probability of Crash',
+        crash_fact_title: '💡 Mathematical Reality:',
+        crash_fact_desc: 'At 5.00x or 10.00x multipliers, crash risk is 80% to 92%. No Telegram predictor bot can know the crash seed in advance.',
+        bj_title: 'Blackjack Basic Strategy Engine',
+        bj_sub: 'House edge drops to 0.5%',
+        dealer_up_lbl: '1. Dealer Upcard:',
+        player_hand_lbl: '2. Player Hand:',
+        opt_action_lbl: 'Optimal Mathematical Action',
+        roulette_title: 'Roulette & Gambler's Fallacy',
+        roulette_sub: 'Independent Events',
+        roulette_warn_title: '🚨 Why 5 Reds in a row does NOT guarantee Black next?',
+        roulette_warn_desc: 'The roulette wheel has no memory. Every spin is an independent event. The 6th spin still has exactly 48.65% chance of Red and 48.65% chance of Black.',
+        mg_title: 'Martingale Death Simulator',
+        mg_sub: 'The Trap of Ruin',
+        mg_desc: 'Martingale doubles the bet after every loss. See how quickly your bankroll is wiped out within 6-7 losses:',
+        settings_title: 'Smart Settings & User Control'
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const dict = i18n[lang];
+      for (const [key, val] of Object.entries(dict)) {
+        const el = document.getElementById(`t_${key}`);
+        if (el) el.textContent = val;
+      }
+      document.getElementById('settingLanguageSelect').value = lang;
+      render();
+    }
+
+    document.getElementById('langToggleBtn').addEventListener('click', () => {
+      setLanguage(currentLang === 'bn' ? 'en' : 'bn');
+    });
+    document.getElementById('settingLanguageSelect').addEventListener('change', (e) => {
+      setLanguage(e.target.value);
+    });
+
+    // Theme Engine (Dark / Light)
+    let currentTheme = 'dark';
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeIcon').textContent = theme === 'dark' ? '🌙' : '☀️';
+      document.getElementById('settingThemeSelect').value = theme;
+    }
+
+    document.getElementById('themeToggleBtn').addEventListener('click', () => {
+      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+    });
+    document.getElementById('settingThemeSelect').addEventListener('change', (e) => {
+      setTheme(e.target.value);
+    });
+
+    // Native Android Floating Overlay or Web Floating Widget
+    const floatingBtn = document.getElementById('floatingBtn');
+    const webFloatingWidget = document.getElementById('webFloatingWidget');
+    const closeWebFloatingBtn = document.getElementById('closeWebFloatingBtn');
+
+    floatingBtn.addEventListener('click', () => {
+      if (window.AndroidNative) {
+        window.AndroidNative.startFloatingWidget();
+      } else {
+        webFloatingWidget.classList.toggle('hidden');
+      }
+    });
+
+    closeWebFloatingBtn.addEventListener('click', () => {
+      webFloatingWidget.classList.add('hidden');
+    });
+
+    // Tab Switching
+    const tabs = document.querySelectorAll('.nav-tab');
+    const panes = document.querySelectorAll('.tab-pane');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const targetId = `tab-${tab.getAttribute('data-tab')}`;
+        panes.forEach(pane => {
+          if (pane.id === targetId) pane.classList.remove('hidden');
+          else pane.classList.add('hidden');
+        });
+      });
+    });
+
+    // Sound & Vibration
+    let audioOn = true;
+    let audioCtx = null;
+    function playBeep(type) {
+      if (window.AndroidNative) {
+        if (type === 'loss') window.AndroidNative.vibrate(200);
+      }
+      if (!audioOn) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+        if (type === 'win') {
+          osc.frequency.setValueAtTime(523, now);
+          osc.frequency.exponentialRampToValueAtTime(784, now + 0.15);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+          osc.start(now); osc.stop(now + 0.3);
+        } else if (type === 'loss') {
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.exponentialRampToValueAtTime(80, now + 0.2);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+          osc.start(now); osc.stop(now + 0.2);
+        }
+      } catch(e){}
+    }
+
+    document.getElementById('audioToggleBtn').addEventListener('click', () => {
+      audioOn = !audioOn;
+      document.getElementById('audioLabel').textContent = audioOn ? (currentLang === 'bn' ? 'অডিও: চালু' : 'Audio: On') : (currentLang === 'bn' ? 'অডিও: বন্ধ' : 'Audio: Off');
+    });
+
+    // State & Live Engine
+    let state = {
+      cur: '৳',
+      start: 5000,
+      balance: 5000,
+      slPct: 30,
+      tpPct: 25,
+      maxTime: 20,
+      rounds: [],
+      lossStreak: 0,
+      startTime: Date.now()
+    };
+
+    function updateTargets() {
+      state.start = parseFloat(document.getElementById('inputStartBankroll').value) || 5000;
+      state.cur = document.getElementById('selectCurrency').value;
+      state.slPct = parseInt(document.getElementById('rangeStopLoss').value);
+      state.tpPct = parseInt(document.getElementById('rangeTakeProfit').value);
+      state.maxTime = parseInt(document.getElementById('rangeMaxTime').value);
+
+      const u1 = Math.round(state.start * 0.01);
+      const u2 = Math.round(state.start * 0.02);
+      document.getElementById('displayUnitBet').textContent = `${state.cur} ${u1} - ${state.cur} ${u2}`;
+      document.getElementById('stopLossPctLabel').textContent = `-${state.slPct}%`;
+      document.getElementById('takeProfitPctLabel').textContent = `+${state.tpPct}%`;
+      document.getElementById('sessionMaxTimeLabel').textContent = `${state.maxTime} ${currentLang === 'bn' ? 'মিনিট' : 'mins'}`;
+      document.getElementById('stopLossTargetVal').textContent = `${state.cur} ${Math.round(state.start * (1 - state.slPct/100))}`;
+      document.getElementById('takeProfitTargetVal').textContent = `${state.cur} ${Math.round(state.start * (1 + state.tpPct/100))}`;
+      
+      const bet = parseFloat(document.getElementById('quickBetAmount').value) || u1;
+      document.getElementById('winBtnPreviewVal').textContent = `+${state.cur}${bet}`;
+      document.getElementById('lossBtnPreviewVal').textContent = `-${state.cur}${bet}`;
+      document.querySelectorAll('.currencyLabel').forEach(el => el.textContent = state.cur);
+    }
+
+    document.getElementById('inputStartBankroll').addEventListener('input', updateTargets);
+    document.getElementById('selectCurrency').addEventListener('change', updateTargets);
+    document.getElementById('rangeStopLoss').addEventListener('input', updateTargets);
+    document.getElementById('rangeTakeProfit').addEventListener('input', updateTargets);
+    document.getElementById('rangeMaxTime').addEventListener('input', updateTargets);
+    document.getElementById('quickBetAmount').addEventListener('input', updateTargets);
+
+    document.getElementById('applySetupBtn').addEventListener('click', () => {
+      updateTargets();
+      state.balance = state.start;
+      state.rounds = [];
+      state.lossStreak = 0;
+      state.startTime = Date.now();
+      render();
+    });
+
+    document.getElementById('resetSessionBtn').addEventListener('click', () => {
+      if (confirm(currentLang === 'bn' ? 'সেশন রিসেট করতে চান?' : 'Reset session?')) {
+        state.balance = state.start;
+        state.rounds = [];
+        state.lossStreak = 0;
+        state.startTime = Date.now();
+        render();
+      }
+    });
+
+    function log(pnl) {
+      state.balance += pnl;
+      if (pnl > 0) {
+        state.lossStreak = 0;
+        playBeep('win');
+      } else {
+        state.lossStreak++;
+        playBeep('loss');
+      }
+      state.rounds.push({ pnl, isWin: pnl > 0 });
+      render();
+    }
+
+    document.getElementById('btnLogWin').addEventListener('click', () => {
+      const b = parseFloat(document.getElementById('quickBetAmount').value) || 100;
+      log(b);
+    });
+
+    document.getElementById('btnLogLoss').addEventListener('click', () => {
+      const b = parseFloat(document.getElementById('quickBetAmount').value) || 100;
+      log(-b);
+    });
+
+    document.getElementById('floatingBtnWin').addEventListener('click', () => {
+      const b = parseFloat(document.getElementById('quickBetAmount').value) || 100;
+      log(b);
+    });
+
+    document.getElementById('floatingBtnLoss').addEventListener('click', () => {
+      const b = parseFloat(document.getElementById('quickBetAmount').value) || 100;
+      log(-b);
+    });
+
+    document.getElementById('btnUndoRound').addEventListener('click', () => {
+      if (state.rounds.length > 0) {
+        const last = state.rounds.pop();
+        state.balance -= last.pnl;
+        render();
+      }
+    });
+
+    function render() {
+      const net = state.balance - state.start;
+      const roi = ((net / state.start) * 100).toFixed(1);
+      
+      document.getElementById('currentBalanceDisplay').textContent = `${state.cur} ${Math.round(state.balance).toLocaleString()}`;
+      document.getElementById('bankrollChangeSubtext').textContent = `${currentLang === 'bn' ? 'শুরু' : 'Start'}: ${state.cur} ${Math.round(state.start).toLocaleString()}`;
+      
+      const pnlEl = document.getElementById('netPnLDisplay');
+      if (net >= 0) {
+        pnlEl.textContent = `+${state.cur} ${Math.round(net).toLocaleString()}`;
+        pnlEl.className = 'stat-val text-emerald';
+      } else {
+        pnlEl.textContent = `-${state.cur} ${Math.round(Math.abs(net)).toLocaleString()}`;
+        pnlEl.className = 'stat-val text-rose';
+      }
+      document.getElementById('roiPctDisplay').textContent = `ROI: ${roi}%`;
+
+      const tot = state.rounds.length;
+      const wins = state.rounds.filter(r => r.isWin).length;
+      document.getElementById('winRateDisplay').textContent = tot > 0 ? `${Math.round(wins/tot*100)}%` : '0%';
+      document.getElementById('totalRoundsDisplay').textContent = `${tot} ${currentLang === 'bn' ? 'রাউন্ড' : 'Rounds'} (${wins}W / ${tot-wins}L)`;
+
+      // Floating Widget display
+      document.getElementById('floatingBalDisplay').textContent = `${state.cur} ${Math.round(state.balance).toLocaleString()}`;
+
+      // Chips
+      const chipsEl = document.getElementById('roundHistoryChips');
+      if (tot === 0) {
+        chipsEl.innerHTML = `<span style="color:var(--text-sub); font-size:11px;">${currentLang === 'bn' ? 'উপরে WIN বা LOSS বাটনে চাপুন।' : 'Tap WIN or LOSS button above.'}</span>`;
+      } else {
+        chipsEl.innerHTML = state.rounds.slice(-12).map(r => 
+          `<span class="chip ${r.isWin ? 'chip-win' : 'chip-loss'}">${r.isWin ? '+' : ''}${r.pnl}</span>`
+        ).join('');
+      }
+
+      // Alerts
+      const slLimit = state.start * (1 - state.slPct/100);
+      const tpLimit = state.start * (1 + state.tpPct/100);
+      const badge = document.getElementById('alertStatusBadge');
+      const txt = document.getElementById('alertMessageText');
+      const dot = document.getElementById('alertStatusDot');
+      const floatStatus = document.getElementById('floatingStatusDisplay');
+
+      if (state.balance <= slLimit) {
+        badge.textContent = currentLang === 'bn' ? '🚨 স্টপ-লস ট্রিগার!' : '🚨 Stop-Loss Triggered!';
+        badge.style.color = '#ef4444';
+        txt.textContent = currentLang === 'bn' ? 'ক্ষতিসীমায় পৌঁছেছেন! এখনই খেলা বন্ধ করুন, লস রিকভারের চেষ্টা করবেন না!' : 'Hit stop-loss limit! Walk away now, never chase losses!';
+        dot.style.background = '#ef4444';
+        floatStatus.textContent = '🚨 স্টপ-লস শেষ! বন্ধ করুন!';
+        floatStatus.style.color = '#ef4444';
+      } else if (state.balance >= tpLimit) {
+        badge.textContent = currentLang === 'bn' ? '🎉 টার্গেট প্রফিট!' : '🎉 Target Profit Reached!';
+        badge.style.color = '#10b981';
+        txt.textContent = currentLang === 'bn' ? 'অভিনন্দন! কাঙ্ক্ষিত লাভ অর্জিত হয়েছে, ক্যাশআউট করে টেবিল ছাড়ুন!' : 'Congratulations! Profit target achieved, cash out now!';
+        dot.style.background = '#10b981';
+        floatStatus.textContent = '🎉 প্রফিট টার্গেট! ক্যাশআউট করুন!';
+        floatStatus.style.color = '#10b981';
+      } else if (state.lossStreak >= 3) {
+        document.getElementById('lossChasingWarningBox').classList.remove('hidden');
+        badge.textContent = currentLang === 'bn' ? '⚠️ লস চেসিং সতর্কতা' : '⚠️ Chasing Warning';
+        badge.style.color = '#f59e0b';
+        txt.textContent = currentLang === 'bn' ? 'পরপর হার! বাজি দ্বিগুণ করবেন না, মাথা ঠান্ডা রাখুন।' : 'Consecutive losses! Do not double bet, keep disciplined.';
+        dot.style.background = '#f59e0b';
+        floatStatus.textContent = `⚠️ ${state.lossStreak}x হার! বাজি বাড়াবেন না!`;
+        floatStatus.style.color = '#f59e0b';
+      } else {
+        document.getElementById('lossChasingWarningBox').classList.add('hidden');
+        badge.textContent = currentLang === 'bn' ? 'সেশন নিরাপদ' : 'Session Safe';
+        badge.style.color = '#10b981';
+        txt.textContent = currentLang === 'bn' ? `প্রতি বাজিতে ${state.cur} ${Math.round(state.start*0.01)} - ${state.cur} ${Math.round(state.start*0.02)} এর মধ্যে সীমাবদ্ধ থাকুন।` : `Keep bet size within ${state.cur} ${Math.round(state.start*0.01)} - ${state.cur} ${Math.round(state.start*0.02)}.`;
+        dot.style.background = '#10b981';
+        floatStatus.textContent = 'নিরাপদ উইন্ডো';
+        floatStatus.style.color = '#10b981';
+      }
+    }
+
+    // Timer
+    setInterval(() => {
+      const sec = Math.floor((Date.now() - state.startTime) / 1000);
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      document.getElementById('sessionTimerDisplay').textContent = `${m}:${s}`;
+      document.getElementById('headerTimerVal').textContent = `${m}:${s}`;
+    }, 1000);
+
+    // Crash Radar
+    const crashSlider = document.getElementById('crashMultiplierSlider');
+    function updateCrash() {
+      const m = parseFloat(crashSlider.value);
+      document.getElementById('crashMultiplierVal').textContent = `${m.toFixed(2)}x`;
+      const win = Math.min(97, (0.97 / m) * 100);
+      document.getElementById('crashWinChanceText').textContent = `${win.toFixed(1)}%`;
+      document.getElementById('crashRiskChanceText').textContent = `${(100 - win).toFixed(1)}%`;
+      const title = document.getElementById('crashRiskCategoryTitle');
+      const advice = document.getElementById('crashRiskAdviceText');
+      if (m <= 1.30) {
+        title.textContent = currentLang === 'bn' ? 'ঝুঁকি স্তর: মাইক্রো / তুলনামূলক নিরাপদ' : 'Risk: Micro / Relatively Safe';
+        advice.textContent = currentLang === 'bn' ? 'ছোট লাভে ক্যাশআউট করা তুলনামূলক নিরাপদ, তবে ৩% ইনস্ট্যান্ট ক্র্যাশ সবসময়ের ঝুঁকি।' : 'Micro cashouts are safer, though 3% instant crash is always a risk.';
+      } else if (m <= 2.00) {
+        title.textContent = currentLang === 'bn' ? 'ঝুঁকি স্তর: মাঝারি (৫০% ক্র্যাশ রেট)' : 'Risk: Moderate (50% Crash Rate)';
+        advice.textContent = currentLang === 'bn' ? '২.০০x-এ প্রায় অর্ধেক রাউন্ডই লস হবে। বাজি ছোট রাখুন।' : 'At 2.00x roughly half the rounds will crash before target.';
+      } else {
+        title.textContent = currentLang === 'bn' ? 'ঝুঁকি স্তর: চরম ঝুঁকি (৮০%+ লস)' : 'Risk: Extreme (>80% Crash Rate)';
+        advice.textContent = currentLang === 'bn' ? 'উচ্চ মাল্টিপ্লায়ারের জন্য অপেক্ষা করা হলো টাকা হারানোর নিশ্চিত উপায়।' : 'Chasing high multipliers is a guaranteed path to bankroll ruin.';
+      }
+    }
+    crashSlider.addEventListener('input', updateCrash);
+    updateCrash();
+
+    // Blackjack Basic Strategy
+    let dCard = '2';
+    let hType = 'hard';
+    let pHand = '12';
+    const hOptions = {
+      hard: ['5-8', '9', '10', '11', '12', '13-16', '17+'],
+      soft: ['A,2-A,3', 'A,4-A,5', 'A,6-A,7', 'A,8+'],
+      pairs: ['2,2-3,3', '4,4-5,5', '6,6-7,7', '8,8', '9,9', '10,10', 'A,A']
+    };
+
+    function renderHands() {
+      const grid = document.getElementById('playerHandValuesGrid');
+      grid.innerHTML = hOptions[hType].map(val => 
+        `<button class="btn-pick ${val === pHand ? 'active' : ''}" onclick="selectHand('${val}')">${val}</button>`
+      ).join('');
+      calcBJ();
+    }
+    window.selectHand = function(val) {
+      pHand = val;
+      renderHands();
+    };
+
+    document.querySelectorAll('#dealerCardButtons .btn-pick').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#dealerCardButtons .btn-pick').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        dCard = btn.getAttribute('data-val');
+        calcBJ();
+      });
+    });
+
+    document.querySelectorAll('.hand-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.hand-type-btn').forEach(b => b.classList.remove('active', 'btn-accent'));
+        btn.classList.add('active', 'btn-accent');
+        hType = btn.getAttribute('data-type');
+        pHand = hOptions[hType][0];
+        renderHands();
+      });
+    });
+
+    function calcBJ() {
+      let act = 'HIT';
+      let exp = 'হিট নিয়ে স্কোর বাড়ানোর চেষ্টা করুন।';
+      if (pHand === '17+' || pHand === 'A,8+' || pHand === '10,10') {
+        act = 'STAND';
+        exp = currentLang === 'bn' ? 'আপনার স্কোর যথেষ্ট শক্তিশালী। বাড়তি কার্ড টানবেন না।' : 'Your hand is strong enough. Do not draw more cards.';
+      } else if (pHand === '13-16' && ['2','3','4','5','6'].includes(dCard)) {
+        act = 'STAND';
+        exp = currentLang === 'bn' ? 'ডিলারের কার্ড দুর্বল। নিজে বাস্ট না হয়ে ডিলারকে বাস্ট হতে দিন।' : 'Dealer has a bust card. Stand and let dealer bust.';
+      } else if (pHand === '10' || pHand === '11') {
+        act = 'DOUBLE';
+        exp = currentLang === 'bn' ? 'ডাবল ডাউন করে বাজি দ্বিগুণ করার গাণিতিক সুযোগ।' : 'Double down to maximize positive expected value.';
+      } else if (pHand === '8,8' || pHand === 'A,A') {
+        act = 'SPLIT';
+        exp = currentLang === 'bn' ? '৮ ও Ace জোড়া সবসময় স্প্লিট করতে হয়।' : 'Always split 8s and Aces.';
+      }
+      document.getElementById('bjActionText').textContent = act;
+      document.getElementById('bjActionExplanation').textContent = exp;
+    }
+
+    renderHands();
+    updateTargets();
+    render();
+  </script>
+</body>
+</html>
