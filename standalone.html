@@ -1,1942 +1,1166 @@
 <!DOCTYPE html>
-<html lang="bn" class="dark">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Casino Math - লাইভ গেম গাইড ও ডিসিপ্লিন অ্যাসিস্ট্যান্ট</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              dark: '#0a0e17',
-              card: '#111827',
-              border: '#1f2937',
-              accent: '#3b82f6',
-              green: '#10b981',
-              red: '#ef4444',
-              amber: '#f59e0b',
-            }
-          }
-        }
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Live Casino Math Companion - লাইভ গেম গাইড ও ডিসিপ্লিন</title>
+  <meta name="theme-color" content="#0a0e17">
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0a0e17;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select {
+      font-family: inherit;
+      font-size: inherit;
+    }
+    
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Header */
+    header {
+      background-color: #111827;
+      border-bottom: 1px solid #1f2937;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #10b981, #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .brand-icon svg { width: 22px; height: 22px; fill: none; stroke: #fff; stroke-width: 2; }
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-live {
+      font-size: 10px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 2px 6px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      background-color: #1f2937;
+      color: #cbd5e1;
+      border: 1px solid #374151;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s;
+    }
+    .btn-action:hover { background-color: #374151; }
+    .btn-action.btn-danger {
+      background-color: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+    .btn-action.btn-accent {
+      background-color: rgba(37, 99, 235, 0.2);
+      border-color: rgba(37, 99, 235, 0.4);
+      color: #93c5fd;
+    }
+
+    /* Tabs Bar */
+    .tabs-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 16px;
+      border-top: 1px solid #1f2937;
+      scrollbar-width: none;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .nav-tab {
+      background-color: #1f2937;
+      color: #94a3b8;
+      border: 1px solid #374151;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .nav-tab.active {
+      background-color: #2563eb;
+      color: #ffffff;
+      border-color: #3b82f6;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Live Emergency Banner */
+    #liveAlertBanner {
+      background-color: #111827;
+      border-bottom: 1px solid #1f2937;
+      padding: 10px 16px;
+      transition: all 0.3s;
+    }
+    .banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #10b981;
+      flex-shrink: 0;
+    }
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      white-space: nowrap;
+    }
+    .banner-text {
+      font-size: 12px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+    .timer-badge {
+      font-family: monospace;
+      font-size: 12px;
+      background: #1f2937;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #374151;
+      color: #f59e0b;
+      white-space: nowrap;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 16px;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 900px) {
+      .grid-2 {
+        grid-template-columns: 360px 1fr;
       }
     }
-  </script>
-  <style>
-/* Custom styling for Live Casino Math Companion */
 
-/* Smooth scroll & base transitions */
-html {
-  scroll-behavior: smooth;
-}
+    /* Card Styling */
+    .card {
+      background-color: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1f2937;
+      margin-bottom: 14px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-sub {
+      font-size: 11px;
+      color: #64748b;
+    }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
+    /* Forms & Inputs */
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+    .form-row {
+      display: flex;
+      gap: 8px;
+    }
+    .input-text {
+      width: 100%;
+      background-color: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 14px;
+      font-family: monospace;
+      outline: none;
+    }
+    .input-text:focus {
+      border-color: #3b82f6;
+    }
+    .select-dropdown {
+      background-color: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      padding: 8px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+    .range-slider {
+      width: 100%;
+      accent-color: #3b82f6;
+      margin: 6px 0;
+    }
+    .range-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #94a3b8;
+    }
 
-::-webkit-scrollbar-track {
-  background: #0f172a;
-}
+    /* Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 600px) {
+      .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .stat-card {
+      background-color: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .stat-val {
+      font-size: 18px;
+      font-weight: 800;
+      font-family: monospace;
+      margin-top: 4px;
+      color: #fff;
+    }
+    .stat-sub {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 2px;
+      font-family: monospace;
+    }
 
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 9999px;
-}
+    /* Big Touch Action Buttons */
+    .big-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .btn-touch {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 12px;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.1s, opacity 0.15s;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    .btn-touch:active {
+      transform: scale(0.97);
+    }
+    .btn-win {
+      background: linear-gradient(135deg, #059669, #047857);
+    }
+    .btn-win:hover { background: linear-gradient(135deg, #10b981, #059669); }
+    .btn-loss {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    .btn-loss:hover { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .touch-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .touch-sub {
+      font-size: 10px;
+      opacity: 0.85;
+    }
+    .touch-preview {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 800;
+    }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
-}
+    /* Round History Chips */
+    .history-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 32px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .chip {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: monospace;
+      font-weight: 700;
+    }
+    .chip-win {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .chip-loss {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
 
-/* Nav Tab Active States */
-.nav-tab.active {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-}
+    /* Warning boxes */
+    .alert-box {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    .alert-box strong { color: #fff; }
 
-/* Button pulse animations */
-@keyframes glow-emerald {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.8);
-  }
-}
+    /* Button grids for Blackjack & Roulette */
+    .btn-grid-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    @media (min-width: 600px) {
+      .btn-grid-row {
+        grid-template-columns: repeat(10, 1fr);
+      }
+    }
+    .btn-pick {
+      background-color: #1f2937;
+      color: #fff;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      padding: 8px 4px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: monospace;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-pick.active {
+      background-color: #2563eb;
+      border-color: #3b82f6;
+    }
+    .decision-display {
+      background: #1e293b;
+      border: 2px solid #3b82f6;
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 14px;
+    }
+    .decision-action {
+      font-size: 28px;
+      font-weight: 900;
+      color: #34d399;
+      margin: 8px 0;
+      font-family: monospace;
+    }
+    .decision-exp {
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
 
-@keyframes glow-rose {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
-  }
-}
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-family: monospace;
+    }
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #1f2937;
+      text-align: left;
+    }
+    th {
+      background: #1f2937;
+      color: #94a3b8;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
 
-.take-profit-pulse {
-  animation: glow-emerald 1.5s infinite;
-}
-
-.stop-loss-pulse {
-  animation: glow-rose 1.5s infinite;
-}
-
-/* Chip tags */
-.round-chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  transition: all 0.15s ease;
-}
-
-.round-chip-win {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.round-chip-loss {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}
-
-.dealer-card-btn.active, .hand-type-btn.active, .player-hand-btn.active {
-  background-color: #2563eb !important;
-  color: #ffffff !important;
-  border-color: #3b82f6 !important;
-}
-
-</style>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0a0e17">
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+    /* Utility */
+    .text-emerald { color: #10b981; }
+    .text-rose { color: #ef4444; }
+    .text-amber { color: #f59e0b; }
+    .text-blue { color: #3b82f6; }
+    .hidden { display: none !important; }
+    .mt-2 { margin-top: 8px; }
+    .mt-4 { margin-top: 16px; }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+<body>
 
-  <!-- Top Navigation Header -->
-  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-blue-600 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-          <i data-lucide="shield-alert" class="w-6 h-6 text-white"></i>
+  <!-- Header -->
+  <header>
+    <div class="header-top container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold bg-gradient-to-r from-emerald-400 via-teal-300 to-blue-400 bg-clip-text text-transparent flex items-center gap-2">
-            Live Casino Math Companion
-            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-medium">LIVE HUD</span>
-          </h1>
-          <p class="text-xs text-slate-400">গাণিতিক সম্ভাবনা ও লাইভ ব্যাংক রোল ডিসিপ্লিন গাইড</p>
+          <div class="brand-title">
+            CasinoMath Guide
+            <span class="badge-live">LIVE</span>
+          </div>
+          <div class="brand-sub">গাণিতিক সম্ভাবনা ও ব্যাংক রোল ডিসিপ্লিন</div>
         </div>
       </div>
 
-      <!-- Quick Session Controls & Audio Toggle -->
-      <div class="flex items-center space-x-2">
-        <button id="audioToggleBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700 flex items-center gap-1.5 transition">
-          <i data-lucide="volume-2" class="w-4 h-4 text-emerald-400" id="audioIcon"></i>
-          <span id="audioLabel">অডিও অ্যালার্ট: চালু</span>
+      <div class="header-actions">
+        <button id="audioToggleBtn" class="btn-action">
+          <span id="audioLabel">অডিও: চালু</span>
         </button>
-
-        <button id="compactModeBtn" class="px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 text-xs font-medium text-blue-400 border border-blue-500/30 flex items-center gap-1.5 transition">
-          <i data-lucide="minimize-2" class="w-4 h-4"></i>
-          <span id="compactLabel">মিনি মোড (Split Screen)</span>
-        </button>
-
-        <button id="resetSessionBtn" class="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-xs font-medium text-red-400 border border-red-500/30 flex items-center gap-1.5 transition">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-          <span>রিসেট</span>
-        </button>
+        <button id="resetSessionBtn" class="btn-action btn-danger">রিসেট</button>
       </div>
     </div>
 
-    <!-- Active Navigation Tabs -->
-    <div class="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto border-t border-slate-800/60 py-1.5 text-xs font-medium">
-      <button class="nav-tab active px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 text-white bg-blue-600" data-tab="hud">
-        <i data-lucide="gauge" class="w-4 h-4"></i>
-        <span>লাইভ HUD ও ট্র্যাকার</span>
-      </button>
-      <button class="nav-tab px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition" data-tab="crash">
-        <i data-lucide="rocket" class="w-4 h-4 text-amber-400"></i>
-        <span>ক্র্যাশ / এভিয়েটর রাডার</span>
-      </button>
-      <button class="nav-tab px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition" data-tab="blackjack">
-        <i data-lucide="spade" class="w-4 h-4 text-blue-400"></i>
-        <span>ব্ল্যাকজ্যাক লাইভ স্ট্র্যাটেজি</span>
-      </button>
-      <button class="nav-tab px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition" data-tab="roulette">
-        <i data-lucide="disc" class="w-4 h-4 text-rose-400"></i>
-        <span>রুলেট ও জুয়াড়ির ভ্রান্তি</span>
-      </button>
-      <button class="nav-tab px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition" data-tab="martingale">
-        <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400"></i>
-        <span>মার্টিঙ্গেল রিস্ক টেস্ট</span>
-      </button>
-      <button class="nav-tab px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition" data-tab="rules">
-        <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
-        <span>গাণিতিক সোনালী নিয়ম</span>
-      </button>
+    <!-- Tabs Navigation -->
+    <div class="tabs-bar container">
+      <button class="nav-tab active" data-tab="hud">📊 লাইভ HUD</button>
+      <button class="nav-tab" data-tab="crash">🚀 ক্র্যাশ রাডার</button>
+      <button class="nav-tab" data-tab="blackjack">♠️ ব্ল্যাকজ্যাক গাইড</button>
+      <button class="nav-tab" data-tab="roulette">🎡 রুলেট ভ্রান্তি</button>
+      <button class="nav-tab" data-tab="martingale">⚠️ মার্টিঙ্গেল টেস্ট</button>
+      <button class="nav-tab" data-tab="rules">📖 সোনালী নিয়ম</button>
     </div>
   </header>
 
-  <!-- Live Sticky Emergency Alert Banner (Popups based on game state) -->
-  <div id="liveAlertBanner" class="bg-slate-900 border-b border-slate-800 py-2.5 px-4 transition-all duration-300">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
-      <div class="flex items-center gap-2.5">
-        <span id="alertStatusDot" class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span id="alertStatusBadge" class="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-          সেশন নিরাপদ
-        </span>
-        <p id="alertMessageText" class="text-xs md:text-sm text-slate-300 font-medium">
-          আপনার ব্যাংক রোল ডিসিপ্লিন মেনে খেলুন। প্রতি বাজিতে মূল ব্যালেন্সের ১%-২% এর বেশি ঝুঁকি নেবেন না।
-        </p>
+  <!-- Live Sticky Emergency Alert Banner -->
+  <div id="liveAlertBanner">
+    <div class="container banner-content">
+      <div class="banner-left">
+        <span class="status-dot" id="alertStatusDot"></span>
+        <span class="status-badge" id="alertStatusBadge">সেশন নিরাপদ</span>
+        <span class="banner-text" id="alertMessageText">প্রতি বাজিতে ১%-২% এর বেশি ঝুঁকি নেবেন না।</span>
       </div>
-      <div id="quickSessionTimer" class="flex items-center gap-1.5 text-xs font-mono bg-slate-800/80 px-2.5 py-1 rounded border border-slate-700 text-slate-300 whitespace-nowrap">
-        <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-400"></i>
-        <span id="headerTimerVal">00:00</span>
-      </div>
+      <div class="timer-badge" id="headerTimerVal">00:00</div>
     </div>
   </div>
 
-  <!-- Main Content Area -->
-  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
-
-    <!-- ==================== TAB 1: LIVE HUD & TRACKER ==================== -->
-    <section id="tab-hud" class="tab-content block space-y-6">
-      
-      <!-- Top Grid: Session Setup + Live Numbers -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <!-- Column 1: Bankroll Settings Card (4 cols) -->
-        <div class="lg:col-span-4 bg-slate-900/90 rounded-2xl border border-slate-800 p-5 shadow-xl flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
-              <h2 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
-                <i data-lucide="wallet" class="w-4 h-4 text-emerald-400"></i>
-                ব্যাংক রোল সেটআপ (Bankroll Rules)
-              </h2>
-              <span class="text-xs text-slate-400 font-mono">লাইভ ক্যালকুলেটর</span>
-            </div>
-
-            <!-- Currency & Starting Capital -->
-            <div class="space-y-3.5 text-xs">
-              <div class="grid grid-cols-3 gap-2">
-                <div class="col-span-2">
-                  <label class="block text-slate-400 font-medium mb-1">প্রারম্ভিক ব্যালেন্স (Starting Bankroll)</label>
-                  <div class="relative">
-                    <input type="number" id="inputStartBankroll" value="5000" min="100" step="100" 
-                      class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white font-mono focus:outline-none focus:border-emerald-500 transition">
-                    <span id="currencySymbolDisplay" class="absolute right-3 top-2.5 text-slate-400 text-xs font-mono">৳ BDT</span>
-                  </div>
-                </div>
-                <div>
-                  <label class="block text-slate-400 font-medium mb-1">কারেন্সি</label>
-                  <select id="selectCurrency" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
-                    <option value="৳">৳ BDT</option>
-                    <option value="$">$ USD</option>
-                    <option value="₹">₹ INR</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Recommended Unit Bet calculation -->
-              <div class="p-3 bg-slate-800/60 rounded-xl border border-slate-700/80">
-                <div class="flex justify-between items-center mb-1">
-                  <span class="text-slate-300 font-semibold flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-                    নিরাপদ বাজি সাইজ (১% - ২% রুল):
-                  </span>
-                  <span id="displayUnitBet" class="text-emerald-400 font-mono font-bold text-sm">৳ ৫০ - ৳ ১০০</span>
-                </div>
-                <p class="text-[11px] text-slate-400">
-                  এর চেয়ে বেশি বাজি ধরলে গাণিতিকভাবে ৩-৪ রাউন্ড লসেই আপনার ক্যাপিটাল ঝুঁকিতে পড়বে।
-                </p>
-              </div>
-
-              <!-- Stop Loss & Take Profit Settings -->
-              <div class="grid grid-cols-2 gap-3 pt-1">
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <label class="text-rose-400 font-semibold flex items-center gap-1">
-                      <i data-lucide="stop-circle" class="w-3.5 h-3.5"></i>
-                      স্টপ-লস (Stop-Loss)
-                    </label>
-                    <span id="stopLossPctLabel" class="text-rose-400 font-mono font-bold">-30%</span>
-                  </div>
-                  <input type="range" id="rangeStopLoss" min="10" max="60" value="30" step="5" class="w-full accent-rose-500">
-                  <div class="text-[11px] text-slate-400 mt-0.5">
-                    ব্যালেন্স <span id="stopLossTargetVal" class="text-rose-400 font-mono font-bold">৳ ৩৫০০</span> হলে বন্ধ
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <label class="text-emerald-400 font-semibold flex items-center gap-1">
-                      <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                      টেক-প্রফিট (Take-Profit)
-                    </label>
-                    <span id="takeProfitPctLabel" class="text-emerald-400 font-mono font-bold">+25%</span>
-                  </div>
-                  <input type="range" id="rangeTakeProfit" min="10" max="100" value="25" step="5" class="w-full accent-emerald-500">
-                  <div class="text-[11px] text-slate-400 mt-0.5">
-                    ব্যালেন্স <span id="takeProfitTargetVal" class="text-emerald-400 font-mono font-bold">৳ ৬২৫০</span> হলে ক্যাশআউট
-                  </div>
-                </div>
-              </div>
-
-              <!-- Time Limit Reminder -->
-              <div>
-                <label class="text-slate-400 font-medium flex justify-between mb-1">
-                  <span class="flex items-center gap-1">
-                    <i data-lucide="timer" class="w-3.5 h-3.5 text-amber-400"></i>
-                    সর্বোচ্চ সেশন সময়সীমা
-                  </span>
-                  <span id="sessionMaxTimeLabel" class="text-amber-400 font-mono font-semibold">২০ মিনিট</span>
-                </label>
-                <input type="range" id="rangeMaxTime" min="10" max="45" value="20" step="5" class="w-full accent-amber-500">
-                <p class="text-[11px] text-slate-400 mt-0.5">
-                  ২০ মিনিটের বেশি খেলা মানে ক্যাসিনোর হাউস এজ নিশ্চিতভাবে বিজয়ী হওয়া।
-                </p>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="pt-4 border-t border-slate-800 mt-4 flex gap-2">
-            <button id="applySetupBtn" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 rounded-lg text-xs flex items-center justify-center gap-1.5 transition">
-              <i data-lucide="play" class="w-3.5 h-3.5"></i>
-              সেশন শুরু / আপডেট করুন
-            </button>
-          </div>
-        </div>
-
-        <!-- Column 2: Live Status Dashboard & Scorecard (8 cols) -->
-        <div class="lg:col-span-8 space-y-6">
-
-          <!-- 4 Stat Counters -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            
-            <!-- Current Bankroll -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 shadow">
-              <span class="text-xs text-slate-400 font-medium block">বর্তমান ব্যালেন্স</span>
-              <div class="text-xl md:text-2xl font-bold font-mono mt-1 text-white flex items-baseline gap-1">
-                <span id="currentBalanceDisplay">৳ ৫,০০০</span>
-              </div>
-              <span id="bankrollChangeSubtext" class="text-[11px] text-slate-400 font-mono mt-0.5 block">প্রারম্ভিক: ৳ ৫,০০০</span>
-            </div>
-
-            <!-- Net Profit / Loss -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 shadow">
-              <span class="text-xs text-slate-400 font-medium block">নেট লাভ / ক্ষতি (P&L)</span>
-              <div class="text-xl md:text-2xl font-bold font-mono mt-1 text-slate-200 flex items-baseline gap-1">
-                <span id="netPnLDisplay">৳ ০</span>
-              </div>
-              <span id="roiPctDisplay" class="text-[11px] font-mono mt-0.5 block text-slate-400">ROI: 0.0%</span>
-            </div>
-
-            <!-- Win Rate & Rounds -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 shadow">
-              <span class="text-xs text-slate-400 font-medium block">উইন রেট ও রাউন্ড</span>
-              <div class="text-xl md:text-2xl font-bold font-mono mt-1 text-blue-400 flex items-baseline gap-1">
-                <span id="winRateDisplay">০%</span>
-              </div>
-              <span id="totalRoundsDisplay" class="text-[11px] text-slate-400 font-mono mt-0.5 block">০ টি রাউন্ড খেলা হয়েছে</span>
-            </div>
-
-            <!-- Session Time & Risk Status -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-3.5 shadow">
-              <span class="text-xs text-slate-400 font-medium block">সেশন টাইমার</span>
-              <div class="text-xl md:text-2xl font-bold font-mono mt-1 text-amber-400 flex items-baseline gap-1">
-                <span id="sessionTimerDisplay">০০:০০</span>
-              </div>
-              <span id="sessionRiskStageDisplay" class="text-[11px] text-emerald-400 font-medium mt-0.5 block">নিরাপদ উইন্ডো</span>
-            </div>
-
-          </div>
-
-          <!-- Live Action & Fast Round Logger (Big Buttons for Split Screen / Live Gaming) -->
-          <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
-              <div>
-                <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2">
-                  <i data-lucide="zap" class="w-4 h-4 text-amber-400"></i>
-                  লাইভ রাউন্ড লগার (১-ক্লিকে রেজাল্ট এন্ট্রি)
-                </h3>
-                <p class="text-xs text-slate-400 mt-0.5">গেম চলার সময় প্রতি রাউন্ডের ফলাফল এখানে ট্যাপ করুন</p>
-              </div>
-
-              <!-- Quick Bet Sizer selector -->
-              <div class="flex items-center gap-2 text-xs">
-                <span class="text-slate-400">বাজির পরিমাণ:</span>
-                <input type="number" id="quickBetAmount" value="100" min="10" step="10" 
-                  class="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1 text-white font-mono text-center focus:outline-none focus:border-blue-500">
-                <span class="currencyLabel font-mono text-slate-400">৳</span>
-              </div>
-            </div>
-
-            <!-- Big Live Touch Buttons -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              
-              <!-- WIN BUTTON -->
-              <button id="btnLogWin" class="group relative overflow-hidden bg-gradient-to-br from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white rounded-xl p-4 transition-all duration-200 shadow-lg shadow-emerald-900/30 flex items-center justify-between active:scale-[0.98]">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-xl bg-emerald-400/20 flex items-center justify-center border border-emerald-300/30">
-                    <i data-lucide="trending-up" class="w-7 h-7 text-white"></i>
-                  </div>
-                  <div class="text-left">
-                    <div class="text-base font-bold tracking-wide">জিতেছেন (+ WIN)</div>
-                    <div class="text-xs text-emerald-100/80">ব্যালেন্স বৃদ্ধি ও উইন রেকর্ড</div>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span id="winBtnPreviewVal" class="text-lg font-mono font-bold text-white">+৳১০০</span>
-                </div>
-              </button>
-
-              <!-- LOSS BUTTON -->
-              <button id="btnLogLoss" class="group relative overflow-hidden bg-gradient-to-br from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 text-white rounded-xl p-4 transition-all duration-200 shadow-lg shadow-rose-900/30 flex items-center justify-between active:scale-[0.98]">
-                <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-xl bg-rose-400/20 flex items-center justify-center border border-rose-300/30">
-                    <i data-lucide="trending-down" class="w-7 h-7 text-white"></i>
-                  </div>
-                  <div class="text-left">
-                    <div class="text-base font-bold tracking-wide">হেরেছেন (- LOSS)</div>
-                    <div class="text-xs text-rose-100/80">স্টপ-লস ও স্ট্রিক ট্র্যাকিং</div>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span id="lossBtnPreviewVal" class="text-lg font-mono font-bold text-white">-৳১০০</span>
-                </div>
-              </button>
-
-            </div>
-
-            <!-- Custom PnL Input Row -->
-            <div class="mt-4 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
-              <div class="flex items-center gap-2">
-                <span class="text-slate-400">কাস্টম রেজাল্ট (যেমন মাল্টিপ্লায়ার বা বড় জয়):</span>
-                <input type="number" id="customPnLInput" placeholder="যেমন: +250 বা -150" 
-                  class="w-32 bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-white font-mono focus:outline-none focus:border-blue-500">
-                <button id="btnSubmitCustom" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded font-medium transition">
-                  যোগ করুন
-                </button>
-              </div>
-
-              <div class="flex items-center gap-2">
-                <button id="btnUndoRound" class="text-slate-400 hover:text-slate-200 flex items-center gap-1 transition">
-                  <i data-lucide="undo-2" class="w-3.5 h-3.5"></i>
-                  আগের রাউন্ড মুছুন
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Streak & Loss Chasing Guard -->
-          <div id="lossChasingWarningBox" class="hidden p-4 rounded-xl bg-rose-950/60 border border-rose-600/60 text-rose-200 text-xs">
-            <div class="flex items-start gap-3">
-              <i data-lucide="alert-octagon" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
-              <div>
-                <h4 class="font-bold text-rose-300 text-sm flex items-center gap-2">
-                  🚨 লস চেসিং অ্যালার্ট (Chasing Losses Detected)!
-                </h4>
-                <p class="mt-1 leading-relaxed text-rose-200/90">
-                  আপনি পরপর <span id="consecutiveLossCountText" class="font-bold underline text-white">৩</span> বার হেরেছেন। এই মুহূর্তে মানুষ সাধারণত ইমোশনাল হয়ে বাজি দ্বিগুণ বা বড় করে ফেলে এবং সর্বস্ব হারায়। <strong>কখনোই আগের টাকা রিকভার করার জন্য বাজি বাড়াবেন না!</strong> শান্ত হোন অথবা কিছুক্ষণের জন্য বন্ধ করুন।
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Round History Strip -->
-          <div class="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                <i data-lucide="history" class="w-3.5 h-3.5 text-blue-400"></i>
-                সাম্প্রতিক রাউন্ড হিস্ট্রি (Last Rounds)
-              </span>
-              <span id="streakBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
-                স্ট্রিক: নিরপেক্ষ
-              </span>
-            </div>
-            <div id="roundHistoryChips" class="flex flex-wrap gap-1.5 min-h-[32px] items-center text-xs font-mono">
-              <span class="text-slate-500 italic text-[11px]">এখনো কোনো রাউন্ড রেকর্ড করা হয়নি। উপরে WIN বা LOSS বাটনে চাপুন।</span>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================== TAB 2: CRASH / AVIATOR RADAR ==================== -->
-    <section id="tab-crash" class="tab-content hidden space-y-6">
-      
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <i data-lucide="rocket" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h2 class="text-base font-bold text-white flex items-center gap-2">
-                ক্র্যাশ / এভিয়েটর প্রোবাবিলিটি রাডার (Crash Math Calculator)
-              </h2>
-              <p class="text-xs text-slate-400">
-                মাল্টিপ্লায়ার সেট করে জেনে নিন ক্র্যাশ হওয়ার আসল গাণিতিক সম্ভাবনা এবং হাউস এজ
-              </p>
-            </div>
-          </div>
-          <span class="text-xs px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono">
-            RTP: ~97.0%
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-          
-          <!-- Controls Column -->
-          <div class="md:col-span-6 space-y-5">
-            <div>
-              <div class="flex justify-between items-center mb-2">
-                <label class="text-sm font-semibold text-slate-200">
-                  আপনার টার্গেট ক্যাশআউট মাল্টিপ্লায়ার:
-                </label>
-                <span id="crashMultiplierVal" class="text-2xl font-mono font-bold text-amber-400">1.50x</span>
-              </div>
-              <input type="range" id="crashMultiplierSlider" min="1.05" max="10.0" value="1.50" step="0.05" 
-                class="w-full accent-amber-500 h-2 bg-slate-800 rounded-lg cursor-pointer">
-              <div class="flex justify-between text-[11px] text-slate-400 mt-1 font-mono">
-                <span>1.05x (মাইক্রো)</span>
-                <span>2.00x (ডাবল)</span>
-                <span>5.00x (হাই)</span>
-                <span>10.00x (চরম ঝুঁকি)</span>
-              </div>
-            </div>
-
-            <!-- Quick multiplier presets -->
-            <div class="flex gap-2">
-              <button class="crashPresetBtn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700" data-mult="1.20">1.20x (নিরাপদ)</button>
-              <button class="crashPresetBtn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700" data-mult="1.50">1.50x</button>
-              <button class="crashPresetBtn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700" data-mult="2.00">2.00x</button>
-              <button class="crashPresetBtn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700" data-mult="3.00">3.00x</button>
-              <button class="crashPresetBtn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-200 border border-slate-700" data-mult="5.00">5.00x (বিপজ্জনক)</button>
-            </div>
-
-            <!-- Mathematical Explanation -->
-            <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/80 text-xs text-slate-300 space-y-2">
-              <div class="font-semibold text-slate-100 flex items-center gap-1.5">
-                <i data-lucide="info" class="w-4 h-4 text-blue-400"></i>
-                অ্যালগরিদমের ভেতরের অংক:
-              </div>
-              <p>
-                ক্র্যাশ গেমের ফর্মুলা: <code class="font-mono bg-slate-900 px-1.5 py-0.5 rounded text-amber-300">P(Win) = (1 - House Edge) / Multiplier</code>।
-              </p>
-              <p>
-                ক্যাসিনোতে সাধারণ হাউস এজ থাকে ৩% (বা RTP ৯৭%)। এছাড়া ১.০০x এ ইনস্ট্যান্ট ক্র্যাশ (Insta-Crash) হওয়ার অন্তর্নির্মিত সম্ভাবনা থাকে প্রায় ৩%।
-              </p>
-            </div>
-          </div>
-
-          <!-- Gauge and Results Column -->
-          <div class="md:col-span-6 space-y-4">
-            
-            <div class="grid grid-cols-2 gap-3">
-              <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700">
-                <span class="text-xs text-slate-400 block">জেতার সম্ভাবনা (Win Chance)</span>
-                <div id="crashWinChanceText" class="text-3xl font-bold font-mono text-emerald-400 mt-1">64.7%</div>
-                <span class="text-[11px] text-slate-400 block mt-1">প্রতি ৩ বারে গড়ে ২ বার সফল</span>
-              </div>
-
-              <div class="bg-slate-800/80 rounded-xl p-4 border border-slate-700">
-                <span class="text-xs text-slate-400 block">ক্র্যাশ বা হারার ঝুঁকি (Crash Risk)</span>
-                <div id="crashRiskChanceText" class="text-3xl font-bold font-mono text-rose-400 mt-1">35.3%</div>
-                <span class="text-[11px] text-slate-400 block mt-1">টার্গেটের আগেই ব্লাস্ট</span>
-              </div>
-            </div>
-
-            <!-- Risk Evaluation Box -->
-            <div id="crashRiskAssessmentBox" class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs">
-              <div class="font-bold text-emerald-400 text-sm flex items-center gap-1.5 mb-1">
-                <i data-lucide="shield" class="w-4 h-4"></i>
-                <span id="crashRiskCategoryTitle">ঝুঁকি স্তর: মাঝারি / নিয়ন্ত্রণযোগ্য</span>
-              </div>
-              <p id="crashRiskAdviceText" class="text-slate-300 leading-relaxed">
-                ১.৫০x এর নিচে অটো-ক্যাশআউট রাখলে ধারাবাহিকতা তুলনামূলক বেশি থাকে। তবে বেশি রাউন্ড খেললে ক্যাসিনোর ৩% হাউস এজ ঠিকই কার্যকর হবে।
-              </p>
-            </div>
-
-            <!-- Live Expected Value Display -->
-            <div class="bg-slate-800/50 rounded-xl p-3 text-xs text-slate-400 flex items-center justify-between border border-slate-800">
-              <span>প্রত্যাশিত মান (Expected Value per 100 ৳ bet):</span>
-              <span id="crashEVText" class="font-mono text-rose-400 font-bold">-৳ ৩.০ (দীর্ঘমেয়াদে লস)</span>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================== TAB 3: BLACKJACK LIVE STRATEGY ==================== -->
-    <section id="tab-blackjack" class="tab-content hidden space-y-6">
-      
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-              <i data-lucide="spade" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h2 class="text-base font-bold text-white flex items-center gap-2">
-                ব্ল্যাকজ্যাক লাইভ ডিসিশন অ্যাসিস্ট্যান্ট (Basic Strategy Engine)
-              </h2>
-              <p class="text-xs text-slate-400">
-                ডিলারের কার্ড ও আপনার কার্ড সিলেক্ট করুন—অংক বলে দেবে সেরা পদক্ষেপ
-              </p>
-            </div>
-          </div>
-          <span class="text-xs px-2.5 py-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 font-mono">
-            হাউস এজ কমে ০.৫%-এ নেমে আসে
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-          
-          <!-- Selectors -->
-          <div class="md:col-span-7 space-y-5">
-            
-            <!-- Dealer Upcard -->
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                ১. ডিলারের দৃশ্যমান কার্ড (Dealer Upcard):
-              </label>
-              <div id="dealerCardButtons" class="grid grid-cols-5 md:grid-cols-10 gap-1.5">
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700 active" data-val="2">2</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="3">3</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="4">4</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="5">5</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="6">6</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="7">7</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="8">8</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="9">9</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-white border border-slate-700" data-val="10">10/J/Q/K</button>
-                <button class="dealer-card-btn py-2.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm font-mono font-bold text-amber-400 border border-slate-700" data-val="A">A</button>
-              </div>
-            </div>
-
-            <!-- Player Hand Category Tabs -->
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-                ২. আপনার হাতের কার্ডের ধরন (Player Hand Type):
-              </label>
-              <div class="flex gap-2 mb-3">
-                <button class="hand-type-btn flex-1 py-1.5 px-3 rounded-lg bg-blue-600 text-xs font-medium text-white" data-type="hard">
-                  হার্ড টোটাল (Hard 5-19+)
-                </button>
-                <button class="hand-type-btn flex-1 py-1.5 px-3 rounded-lg bg-slate-800 text-xs font-medium text-slate-300 border border-slate-700" data-type="soft">
-                  সফট টোটাল (A,2 থেকে A,9)
-                </button>
-                <button class="hand-type-btn flex-1 py-1.5 px-3 rounded-lg bg-slate-800 text-xs font-medium text-slate-300 border border-slate-700" data-type="pairs">
-                  জোড়া / পেয়ার (Pairs 2,2-A,A)
-                </button>
-              </div>
-
-              <!-- Sub-Buttons: Hand Value -->
-              <div id="playerHandValuesGrid" class="grid grid-cols-4 md:grid-cols-6 gap-1.5">
-                <!-- Injected via JavaScript -->
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Output Decision Card -->
-          <div class="md:col-span-5 flex flex-col justify-center">
-            
-            <div id="bjDecisionBox" class="rounded-2xl p-6 border text-center transition-all duration-300 bg-slate-800/80 border-slate-700">
-              <span class="text-xs uppercase font-mono tracking-widest text-slate-400 block mb-1">
-                গাণিতিক সেরা সিদ্ধান্ত (Optimal Action)
-              </span>
-              <div id="bjActionText" class="text-3xl md:text-4xl font-black font-mono tracking-wider text-emerald-400 my-2">
-                HIT (হিট)
-              </div>
-              <div id="bjActionExplanation" class="text-xs text-slate-300 mt-2 leading-relaxed bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-                ডিলারের আপকার্ডের বিরুদ্ধে এই স্কোরে হিট নিলে জিতার সম্ভাবনা সর্বোচ্চ থাকে।
-              </div>
-
-              <div class="mt-4 pt-3 border-t border-slate-700/60 flex justify-around text-xs font-mono text-slate-400">
-                <div>আপনার হাত: <span id="bjSummaryPlayer" class="text-white font-bold">12</span></div>
-                <div>ডিলার: <span id="bjSummaryDealer" class="text-white font-bold">2</span></div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================== TAB 4: ROULETTE & GAMBLER'S FALLACY ==================== -->
-    <section id="tab-roulette" class="tab-content hidden space-y-6">
-      
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
-              <i data-lucide="disc" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h2 class="text-base font-bold text-white flex items-center gap-2">
-                রুলেট ও জুয়াড়ির ভ্রান্তি ডিটেক্টর (Gambler's Fallacy Buster)
-              </h2>
-              <p class="text-xs text-slate-400">
-                কেন পরপর ৫ বার লাল আসার পরও পরের বার কালোর সম্ভাবনা বাড়ে না?
-              </p>
-            </div>
-          </div>
-          <span class="text-xs px-2.5 py-1 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 font-mono">
-            স্বাধীন সম্ভাব্যতা (Independent Events)
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-          
-          <div class="md:col-span-6 space-y-5">
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-2">
-                পরীক্ষা: পরপর কতবার একই রং (লাল বা কালো) উঠেছে?
-              </label>
-              <div class="flex items-center gap-3">
-                <input type="range" id="rouletteStreakSlider" min="1" max="10" value="5" class="w-full accent-rose-500">
-                <span id="rouletteStreakVal" class="text-xl font-mono font-bold text-white w-12 text-center">৫ বার</span>
-              </div>
-            </div>
-
-            <!-- Simulation button -->
-            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 text-xs space-y-3">
-              <div class="font-semibold text-rose-300 flex items-center gap-1.5">
-                <i data-lucide="alert-circle" class="w-4 h-4"></i>
-                সাধারণ জুয়াড়ির ভুল ধারণা:
-              </div>
-              <p class="text-slate-300 leading-relaxed">
-                অনেকে ভাবেন: <em>"পরপর ৫ বার RED এসেছে, এবার নিশ্চিত BLACK আসবেই, তাই বেশি টাকা বাজি ধরি!"</em>
-              </p>
-              <div class="p-3 bg-rose-950/40 border border-rose-500/30 rounded-lg text-rose-200 font-medium">
-                🚨 ফলাফল: চাকার কোনো মস্তিষ্ক বা মেমোরি নেই। ৬ষ্ঠ স্পিনেও ব্ল্যাক আসার সম্ভাবনা ঠিক আগের মতোই মাত্র <strong>৪৮.৬৫%</strong>।
-              </div>
-            </div>
-
-            <!-- European vs American comparison -->
-            <div class="p-4 rounded-xl bg-slate-800/40 border border-slate-800 text-xs space-y-2">
-              <span class="font-bold text-slate-200">ইউরোপিয়ান বনাম আমেরিকান রুলেট:</span>
-              <div class="grid grid-cols-2 gap-2 mt-2">
-                <div class="p-2.5 bg-emerald-950/30 border border-emerald-500/30 rounded-lg">
-                  <div class="font-bold text-emerald-400">ইউরোপিয়ান (১টি ০)</div>
-                  <div class="text-[11px] text-slate-400 mt-1">হাউস এজ: ২.৭০%</div>
-                  <div class="text-[10px] text-emerald-300 mt-0.5">খেলতে চাইলে এটিই খেলুন</div>
-                </div>
-                <div class="p-2.5 bg-rose-950/30 border border-rose-500/30 rounded-lg">
-                  <div class="font-bold text-rose-400">আমেরিকান (০ এবং ০০)</div>
-                  <div class="text-[11px] text-slate-400 mt-1">হাউস এজ: ৫.২৬%</div>
-                  <div class="text-[10px] text-rose-300 mt-0.5">দ্বিগুণ ক্ষতি—এড়িয়ে চলুন!</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="md:col-span-6 space-y-4">
-            
-            <div class="bg-slate-800/80 rounded-xl p-5 border border-slate-700">
-              <span class="text-xs text-slate-400 block mb-2 font-mono">পরবর্তী স্পিনের আসল গাণিতিক সম্ভাবনা:</span>
-              
-              <div class="space-y-3 font-mono text-xs">
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span class="text-rose-400 font-bold">RED (লাল)</span>
-                    <span class="text-slate-300">১৮/৩৭ = ৪৮.৬৫%</span>
-                  </div>
-                  <div class="w-full bg-slate-900 rounded-full h-2.5">
-                    <div class="bg-rose-500 h-2.5 rounded-full" style="width: 48.65%"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span class="text-slate-200 font-bold">BLACK (কালো)</span>
-                    <span class="text-slate-300">১৮/৩৭ = ৪৮.৬৫%</span>
-                  </div>
-                  <div class="w-full bg-slate-900 rounded-full h-2.5">
-                    <div class="bg-slate-400 h-2.5 rounded-full" style="width: 48.65%"></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span class="text-emerald-400 font-bold">GREEN ZERO (ক্যাসিনোর নিশ্চিত লাভ)</span>
-                    <span class="text-emerald-400">১/৩৭ = ২.৭০%</span>
-                  </div>
-                  <div class="w-full bg-slate-900 rounded-full h-2.5">
-                    <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 2.7%"></div>
-                  </div>
-                </div>
-              </div>
-
-              <p class="text-[11px] text-slate-400 mt-4 leading-relaxed">
-                👉 লক্ষ্য করুন: লাল ও কালোর সম্ভাবনা যোগ করলে হয় ৯৭.৩%। বাকি ২.৭% শূন্যের ঘরে চলে যায়। এই ২.৭% এর কারণেই দীর্ঘমেয়াদে আপনি হারবেন।
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================== TAB 5: MARTINGALE SIMULATOR ==================== -->
-    <section id="tab-martingale" class="tab-content hidden space-y-6">
-      
-      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
-              <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h2 class="text-base font-bold text-white flex items-center gap-2">
-                মার্টিঙ্গেল সিস্টেম বিপদ টেস্ট (Martingale Death Simulator)
-              </h2>
-              <p class="text-xs text-slate-400">
-                হারলে বাজি দ্বিগুণ করার কৌশল কেন মানুষকে ১ দিনে নিঃস্ব করে দেয়?
-              </p>
-            </div>
-          </div>
-          <span class="text-xs px-2.5 py-1 rounded bg-red-500/10 border border-red-500/30 text-red-400 font-mono">
-            সর্বস্ব হারানোর ফাঁদ
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-          
-          <div class="md:col-span-5 space-y-4">
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">
-                প্রথম বাজি (Base Bet):
-              </label>
-              <input type="number" id="mgBaseBet" value="100" min="10" step="10" 
-                class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-sm">
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-300 mb-1">
-                আপনার মোট ব্যাংক রোল (Bankroll):
-              </label>
-              <input type="number" id="mgBankroll" value="5000" min="500" step="500" 
-                class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-sm">
-            </div>
-
-            <button id="runMartingaleSimBtn" class="w-full bg-red-600 hover:bg-red-500 text-white font-semibold py-2.5 rounded-lg text-xs transition flex items-center justify-center gap-2">
-              <i data-lucide="play" class="w-4 h-4"></i>
-              সিমুলেশন চালান
-            </button>
-
-            <div class="p-3 bg-slate-800/80 rounded-xl text-xs text-slate-400 leading-relaxed">
-              💡 মার্টিঙ্গেল নিয়মে প্রতিবার হারলে বাজি দ্বিগুণ করতে হয় (যেমন: ১০০ ৳ &rarr; ২০০ ৳ &rarr; ৪০০ ৳ &rarr; ৮০০ ৳...)। নিচে দেখুন কত দ্রুত ব্যালেন্স শেষ হয়ে যায়।
-            </div>
-          </div>
-
-          <div class="md:col-span-7">
-            <div class="bg-slate-800/60 rounded-xl border border-slate-700 overflow-hidden">
-              <table class="w-full text-left text-xs font-mono">
-                <thead class="bg-slate-800 text-slate-300 uppercase text-[10px] tracking-wider border-b border-slate-700">
-                  <tr>
-                    <th class="p-2.5">হারের রাউন্ড</th>
-                    <th class="p-2.5">প্রয়োজনীয় বাজি</th>
-                    <th class="p-2.5">মোট ঝুঁকির টাকা</th>
-                    <th class="p-2.5">জিতলে নিট লাভ</th>
-                  </tr>
-                </thead>
-                <tbody id="martingaleTableBody" class="divide-y divide-slate-800 text-slate-300">
-                  <!-- Injected via JavaScript -->
-                </tbody>
-              </table>
-            </div>
-
-            <div id="martingaleVerdictBox" class="mt-4 p-3.5 bg-red-950/60 border border-red-500/40 rounded-xl text-xs text-red-200 leading-relaxed">
-              <!-- Injected -->
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ==================== TAB 6: GOLDEN RULES ==================== -->
-    <section id="tab-rules" class="tab-content hidden space-y-6">
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- Main Content -->
+  <main class="container">
+
+    <!-- ================= TAB 1: LIVE HUD ================= -->
+    <section id="tab-hud" class="tab-pane">
+      <div class="grid-2">
         
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-          <div class="flex items-center gap-3 pb-3 border-b border-slate-800">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h3 class="text-sm font-bold text-white">গাণিতিক বেঁচে থাকার নিয়ম (Rules to Survive)</h3>
-              <p class="text-xs text-slate-400">এগুলো মানলে লস সর্বনিম্ন রাখা সম্ভব</p>
+        <!-- Setup Column -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">💰 ব্যাংক রোল সেটআপ</span>
+            <span class="card-sub">ক্যালকুলেটর</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">প্রারম্ভিক ব্যালেন্স (Starting Bankroll)</label>
+            <div class="form-row">
+              <input type="number" id="inputStartBankroll" value="5000" min="100" step="100" class="input-text">
+              <select id="selectCurrency" class="select-dropdown">
+                <option value="৳">৳ BDT</option>
+                <option value="$">$ USD</option>
+                <option value="₹">₹ INR</option>
+              </select>
             </div>
           </div>
 
-          <ul class="space-y-3 text-xs text-slate-300 leading-relaxed">
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">১</span>
-              <div>
-                <strong class="text-white">লাভ হলে উঠে যান (Hit & Run):</strong> ২০% লাভ হওয়া মাত্রই ওই দিনের মতো খেলা শেষ করুন। ক্যাসিনোতে বেশিক্ষণ থাকার মানেই হলো নিশ্চিত পরাজয়।
-              </div>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">২</span>
-              <div>
-                <strong class="text-white">১%-২% বাজি সীমাবদ্ধতা:</strong> আপনার ওয়ালেটে ৫,০০০ টাকা থাকলে একক বাজি ৫০-১০০ টাকার বেশি ধরবেন না।
-              </div>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">৩</span>
-              <div>
-                <strong class="text-white">উচ্চ RTP গেম বেছে নিন:</strong> আমেরিকান রুলেট (RTP 94.7%) না খেলে ইউরোপিয়ান রুলেট (RTP 97.3%) খেলুন। অথবা ব্ল্যাকজ্যাক বেসিক স্ট্র্যাটেজি (RTP 99.5%) খেলুন।
-              </div>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">৪</span>
-              <div>
-                <strong class="text-white">টাই বা সাইড বেট পরিহার করুন:</strong> বাকারার 'Tie' বেটে হাউস এজ ১৪.৩৬%! এগুলো হলো সম্পূর্ণ ফাঁদ।
-              </div>
-            </li>
-          </ul>
+          <div class="alert-box" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #a7f3d0;">
+            <div style="font-weight: 700; margin-bottom: 2px;">নিরাপদ বাজি সাইজ (১% - ২% রুল):</div>
+            <div id="displayUnitBet" style="font-size: 16px; font-weight: 800; font-family: monospace; color: #34d399;">৳ ৫০ - ৳ ১০০</div>
+            <div style="font-size: 10px; margin-top: 4px; color: #cbd5e1;">এর বেশি বাজি ধরলে দ্রুত ব্যালেন্স শেষ হওয়ার ঝুঁকি তৈরি হয়।</div>
+          </div>
+
+          <div class="form-group">
+            <div class="range-info">
+              <span class="text-rose">স্টপ-লস (Stop-Loss)</span>
+              <span id="stopLossPctLabel" class="text-rose font-bold">-30%</span>
+            </div>
+            <input type="range" id="rangeStopLoss" min="10" max="60" value="30" step="5" class="range-slider" style="accent-color: #ef4444;">
+            <div style="font-size: 11px; color: #94a3b8;">ব্যালেন্স <span id="stopLossTargetVal" class="text-rose" style="font-weight: 700;">৳ ৩৫০০</span> হলে খেলা বন্ধ</div>
+          </div>
+
+          <div class="form-group">
+            <div class="range-info">
+              <span class="text-emerald">টেক-প্রফিট (Take-Profit)</span>
+              <span id="takeProfitPctLabel" class="text-emerald font-bold">+25%</span>
+            </div>
+            <input type="range" id="rangeTakeProfit" min="10" max="100" value="25" step="5" class="range-slider" style="accent-color: #10b981;">
+            <div style="font-size: 11px; color: #94a3b8;">ব্যালেন্স <span id="takeProfitTargetVal" class="text-emerald" style="font-weight: 700;">৳ ৬২৫০</span> হলে ক্যাশআউট</div>
+          </div>
+
+          <div class="form-group">
+            <div class="range-info">
+              <span class="text-amber">সর্বোচ্চ খেলার সময়</span>
+              <span id="sessionMaxTimeLabel" class="text-amber font-bold">২০ মিনিট</span>
+            </div>
+            <input type="range" id="rangeMaxTime" min="10" max="45" value="20" step="5" class="range-slider" style="accent-color: #f59e0b;">
+          </div>
+
+          <button id="applySetupBtn" class="btn-action btn-accent" style="width: 100%; padding: 10px; justify-content: center; font-size: 13px;">
+            সেশন আপডেট / রিস্টার্ট
+          </button>
         </div>
 
-        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
-          <div class="flex items-center gap-3 pb-3 border-b border-slate-800">
-            <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center">
-              <i data-lucide="x-circle" class="w-5 h-5"></i>
+        <!-- Live Scoreboard Column -->
+        <div>
+          
+          <!-- 4 Stat Counters -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">বর্তমান ব্যালেন্স</div>
+              <div id="currentBalanceDisplay" class="stat-val text-emerald">৳ ৫,০০০</div>
+              <div id="bankrollChangeSubtext" class="stat-sub">শুরু: ৳ ৫,০০০</div>
             </div>
-            <div>
-              <h3 class="text-sm font-bold text-white">যে ভুলগুলো কখনই করবেন না (Deadly Mistakes)</h3>
-              <p class="text-xs text-slate-400">যে কারণে ৯৯% মানুষ নিঃস্ব হয়</p>
+            <div class="stat-card">
+              <div class="stat-label">নেট লাভ / ক্ষতি</div>
+              <div id="netPnLDisplay" class="stat-val">৳ ০</div>
+              <div id="roiPctDisplay" class="stat-sub">ROI: 0.0%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">উইন রেট</div>
+              <div id="winRateDisplay" class="stat-val text-blue">০%</div>
+              <div id="totalRoundsDisplay" class="stat-sub">০ রাউন্ড</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">সেশন সময়</div>
+              <div id="sessionTimerDisplay" class="stat-val text-amber">০০:০০</div>
+              <div id="sessionRiskStageDisplay" class="stat-sub text-emerald">নিরাপদ উইন্ডো</div>
             </div>
           </div>
 
-          <ul class="space-y-3 text-xs text-slate-300 leading-relaxed">
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">১</span>
-              <div>
-                <strong class="text-white">লস রিকভারের জন্য বড় বাজি:</strong> হেরে যাওয়ার পর রাগ বা হতাশা থেকে বাজি বাড়ানোই হলো সর্বস্ব হারানোর প্রধান কারণ।
+          <!-- Big Live Action Buttons -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">⚡ ১-ট্যাপে রেজাল্ট এন্ট্রি</span>
+              <div style="display: flex; align-items: center; gap: 4px; font-size: 11px;">
+                <span style="color: #94a3b8;">বাজি:</span>
+                <input type="number" id="quickBetAmount" value="100" min="10" step="10" style="width: 70px; background: #1f2937; border: 1px solid #374151; color: #fff; padding: 4px; border-radius: 6px; text-align: center; font-family: monospace;">
+                <span class="currencyLabel">৳</span>
               </div>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">২</span>
-              <div>
-                <strong class="text-white">টেলিগ্রাম / ইউটিউব হ্যাক বট বিশ্বাস করা:</strong> এভিয়েটর সিগন্যাল বট বা ক্যাসিনো হ্যাক অ্যাপ বলে পৃথিবীতে কোনো কিছুর অস্তিত্ব নেই। সেগুলো ১০০% প্রতারণা।
-              </div>
-            </li>
-            <li class="flex items-start gap-2.5">
-              <span class="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">৩</span>
-              <div>
-                <strong class="text-white">ঋণ বা জরুরি খরচের টাকা দিয়ে খেলা:</strong> ক্যাসিনো কোনো ইনকাম সোর্স নয়। জুয়ায় যে টাকা ঢুকাবেন, তা পুরোপুরি চলে যেতে পারে এই প্রস্তুতি না থাকলে খেলবেন না।
-              </div>
-            </li>
-          </ul>
+            </div>
+
+            <div class="big-actions-grid">
+              <button id="btnLogWin" class="btn-touch btn-win">
+                <div>
+                  <div class="touch-title">+ WIN (জিতেছেন)</div>
+                  <div class="touch-sub">ব্যালেন্স বৃদ্ধি</div>
+                </div>
+                <div id="winBtnPreviewVal" class="touch-preview">+৳১০০</div>
+              </button>
+
+              <button id="btnLogLoss" class="btn-touch btn-loss">
+                <div>
+                  <div class="touch-title">- LOSS (হেরেছেন)</div>
+                  <div class="touch-sub">স্টপ-লস ট্র্যাকিং</div>
+                </div>
+                <div id="lossBtnPreviewVal" class="touch-preview">-৳১০০</div>
+              </button>
+            </div>
+
+            <!-- Loss Chasing Danger Warning -->
+            <div id="lossChasingWarningBox" class="alert-box hidden">
+              <strong>🚨 লস চেসিং অ্যালার্ট (Chasing Losses Detected)!</strong><br>
+              আপনি পরপর <span id="consecutiveLossCountText" style="font-weight: 800; text-decoration: underline;">৩</span> বার হেরেছেন। কখনোই লস রিকভার করার লোভে বাজি বাড়াবেন না! আবেগ নিয়ন্ত্রণ করুন।
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #1f2937;">
+              <span style="color: #94a3b8;">সাম্প্রতিক রাউন্ড হিস্ট্রি:</span>
+              <button id="btnUndoRound" class="btn-action" style="padding: 4px 8px;">আগের রাউন্ড মুছুন</button>
+            </div>
+
+            <div id="roundHistoryChips" class="history-strip">
+              <span style="color: #64748b; font-size: 11px;">উপরে WIN বা LOSS বাটনে চাপুন।</span>
+            </div>
+          </div>
+
         </div>
 
       </div>
+    </section>
 
+    <!-- ================= TAB 2: CRASH RADAR ================= -->
+    <section id="tab-crash" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🚀 ক্র্যাশ / এভিয়েটর প্রোবাবিলিটি রাডার</span>
+          <span class="card-sub">RTP: ~97.0%</span>
+        </div>
+
+        <div style="margin: 16px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="form-label" style="font-size: 13px;">টার্গেট ক্যাশআউট মাল্টিপ্লায়ার:</label>
+            <span id="crashMultiplierVal" style="font-size: 24px; font-weight: 800; font-family: monospace; color: #f59e0b;">1.50x</span>
+          </div>
+          <input type="range" id="crashMultiplierSlider" min="1.05" max="10.0" value="1.50" step="0.05" class="range-slider" style="accent-color: #f59e0b;">
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">জেতার সম্ভাবনা (Win Chance)</div>
+            <div id="crashWinChanceText" class="stat-val text-emerald">64.7%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">ক্র্যাশ বা হারার ঝুঁকি</div>
+            <div id="crashRiskChanceText" class="stat-val text-rose">35.3%</div>
+          </div>
+        </div>
+
+        <div id="crashRiskAssessmentBox" class="alert-box" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #a7f3d0;">
+          <div id="crashRiskCategoryTitle" style="font-weight: 700; margin-bottom: 4px;">ঝুঁকি স্তর: মাঝারি / নিয়ন্ত্রণযোগ্য</div>
+          <p id="crashRiskAdviceText">১.৫০x এর নিচে অটো-ক্যাশআউট রাখলে ধারাবাহিকতা কিছুটা থাকে, তবে দীর্ঘক্ষণ খেললে ৩% হাউস এজ ঠিকই লস করাবে।</p>
+        </div>
+
+        <div class="card" style="background: #1f2937; border-color: #374151; font-size: 12px; color: #94a3b8;">
+          <strong style="color: #fff;">💡 গাণিতিক বাস্তবতা:</strong> ৫.০০x বা ১০.০০x মাল্টিপ্লায়ারে হারার ঝুঁকি ৮০% থেকে ৯২%। টেলিগ্রামের কোনো হ্যাক বট আগে থেকে ক্র্যাশ টাইম প্রেডিক্ট করতে পারে না।
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: BLACKJACK ================= -->
+    <section id="tab-blackjack" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">♠️ ব্ল্যাকজ্যাক লাইভ বেসিক স্ট্র্যাটেজি</span>
+          <span class="card-sub">হাউস এজ মাত্র ০.৫%</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">১. ডিলারের দৃশ্যমান কার্ড (Dealer Upcard):</label>
+          <div class="btn-grid-row" id="dealerCardButtons">
+            <button class="btn-pick active" data-val="2">2</button>
+            <button class="btn-pick" data-val="3">3</button>
+            <button class="btn-pick" data-val="4">4</button>
+            <button class="btn-pick" data-val="5">5</button>
+            <button class="btn-pick" data-val="6">6</button>
+            <button class="btn-pick" data-val="7">7</button>
+            <button class="btn-pick" data-val="8">8</button>
+            <button class="btn-pick" data-val="9">9</button>
+            <button class="btn-pick" data-val="10">10</button>
+            <button class="btn-pick" data-val="A">A</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">২. আপনার হাতের কার্ড (Player Hand):</label>
+          <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+            <button class="btn-action btn-accent active hand-type-btn" data-type="hard">হার্ড (Hard)</button>
+            <button class="btn-action hand-type-btn" data-type="soft">সফট (A,x)</button>
+            <button class="btn-action hand-type-btn" data-type="pairs">পেয়ার (Pairs)</button>
+          </div>
+          <div class="btn-grid-row" id="playerHandValuesGrid"></div>
+        </div>
+
+        <div class="decision-display" id="bjDecisionBox">
+          <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8;">গাণিতিক সেরা সিদ্ধান্ত (Optimal Action)</div>
+          <div class="decision-action" id="bjActionText">HIT (হিট)</div>
+          <div class="decision-exp" id="bjActionExplanation">ডিলারের আপকার্ডের বিরুদ্ধে এই স্কোরে হিট নিলে জেতার সম্ভাবনা সর্বোচ্চ থাকে।</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: ROULETTE ================= -->
+    <section id="tab-roulette" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎡 রুলেট ও জুয়াড়ির ভ্রান্তি (Gambler's Fallacy)</span>
+          <span class="card-sub">স্বাধীন ঘটনা</span>
+        </div>
+
+        <div class="alert-box">
+          <strong>🚨 কেন পরপর ৫ বার RED আসার পরও BLACK আসবেই এমন কোনো নিশ্চয়তা নেই?</strong><br>
+          রুলেট চাকার কোনো মেমোরি বা স্মৃতি নেই। প্রতিটি স্পিন সম্পূর্ণ স্বাধীন (Independent Event)। ৬ষ্ঠ স্পিনেও লাল আসার সম্ভাবনা ঠিক আগের মতোই <strong>৪৮.৬৫%</strong> এবং কালো আসার সম্ভাবনাও <strong>৪৮.৬৫%</strong>।
+        </div>
+
+        <div class="stats-grid mt-4">
+          <div class="stat-card" style="border-left: 4px solid #ef4444;">
+            <div class="stat-label">RED (লাল)</div>
+            <div class="stat-val text-rose">৪৮.৬৫%</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #94a3b8;">
+            <div class="stat-label">BLACK (কালো)</div>
+            <div class="stat-val">৪৮.৬৫%</div>
+          </div>
+          <div class="stat-card" style="border-left: 4px solid #10b981;">
+            <div class="stat-label">GREEN 0 (ক্যাসিনোর লাভ)</div>
+            <div class="stat-val text-emerald">২.৭০%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 5: MARTINGALE ================= -->
+    <section id="tab-martingale" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⚠️ মার্টিঙ্গেল ডেথ সিমুলেটর</span>
+          <span class="card-sub">সর্বস্ব হারানোর ফাঁদ</span>
+        </div>
+
+        <div class="alert-box">
+          মার্টিঙ্গেল নিয়মে হারলে বাজি দ্বিগুণ করা হয়। নিচে দেখুন কীভাবে মাত্র ৬-৭ রাউন্ড লসেই ব্যাংক রোল শূন্য হয়ে যায়:
+        </div>
+
+        <div style="overflow-x: auto; margin-top: 12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>হারের রাউন্ড</th>
+                <th>প্রয়োজনীয় বাজি</th>
+                <th>মোট ঝুঁকির টাকা</th>
+                <th>জিতলে নিট লাভ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>রাউন্ড #১</td><td>৳ ১০০</td><td>৳ ১০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #২</td><td>৳ ২০০</td><td>৳ ৩০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #৩</td><td>৳ ৪০০</td><td>৳ ৭০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #৪</td><td>৳ ৮০০</td><td>৳ ১,৫০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr><td>রাউন্ড #৫</td><td>৳ ১,৬০০</td><td>৳ ৩,১০০</td><td class="text-emerald">+৳ ১০০</td></tr>
+              <tr style="background: rgba(239,68,68,0.2); color: #fca5a5; font-weight: 700;">
+                <td>রাউন্ড #৬ 💥</td><td>৳ ৩,২০০</td><td>৳ ৬,৩০০</td><td>দেউলিয়া!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 6: RULES ================= -->
+    <section id="tab-rules" class="tab-pane hidden">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📖 গাণিতিক সোনালী নিয়মাবলী</span>
+        </div>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; font-size: 13px; color: #cbd5e1;">
+          <li>✅ <strong>লাভ হলে টেবিল ছাড়ুন (Hit & Run):</strong> ২০% লাভ হলে ক্যাশআউট করে ওই দিনের মতো খেলা শেষ করুন।</li>
+          <li>✅ <strong>১%-২% রুল:</strong> মোট বাজেটের ১-২% এর বেশি একক বাজি কখনো ধরবেন না।</li>
+          <li>❌ <strong>লস চেসিং করবেন না:</strong> হেরে গেলে বাজি দ্বিগুণ করার ভুল সিদ্ধান্তই সর্বস্ব হারানোর মূল কারণ।</li>
+          <li>❌ <strong>কোনো প্রেডিক্টর বট বিশ্বাস করবেন না:</strong> ক্যাসিনো অ্যালগরিদম সার্ভার সাইডে চলে, বাইরে থেকে কোনো অ্যাপ ফল জানতে পারে না।</li>
+        </ul>
+      </div>
     </section>
 
   </main>
 
-  <!-- Floating Compact Mini HUD for Split-Screen Gaming -->
-  <div id="compactMiniHud" class="hidden fixed bottom-4 right-4 z-50 bg-slate-900/95 border-2 border-blue-500 rounded-2xl p-4 shadow-2xl backdrop-blur-md w-80 text-xs transition-all">
-    <div class="flex items-center justify-between pb-2 border-b border-slate-800 mb-2">
-      <span class="font-bold text-white flex items-center gap-1.5">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        মিনি HUD (Split Screen)
-      </span>
-      <button id="closeMiniHudBtn" class="text-slate-400 hover:text-white">
-        <i data-lucide="x" class="w-4 h-4"></i>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-2 gap-2 mb-3 font-mono">
-      <div class="p-2 bg-slate-800/80 rounded-lg">
-        <div class="text-[10px] text-slate-400">ব্যালেন্স</div>
-        <div id="miniBalance" class="text-sm font-bold text-white">৳ ৫,০০০</div>
-      </div>
-      <div class="p-2 bg-slate-800/80 rounded-lg">
-        <div class="text-[10px] text-slate-400">P&L (লাভ/লস)</div>
-        <div id="miniPnL" class="text-sm font-bold text-slate-300">৳ ০</div>
-      </div>
-    </div>
-
-    <div class="flex gap-2 mb-2">
-      <button id="miniBtnWin" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs transition">
-        + WIN
-      </button>
-      <button id="miniBtnLoss" class="flex-1 bg-rose-600 hover:bg-rose-500 text-white font-bold py-2 rounded-lg text-xs transition">
-        - LOSS
-      </button>
-    </div>
-
-    <div id="miniAlertText" class="text-[11px] text-slate-300 bg-slate-800/50 p-2 rounded border border-slate-700/60 leading-tight">
-      ১%-২% রুল মেনে চলুন। স্টপ লসে পৌঁছালে খেলা বন্ধ করুন।
-    </div>
-  </div>
-
-  <!-- Audio Beep Generator using Web Audio API -->
+  <!-- Interactive JavaScript Engine (100% Inline, Zero External CDN Dependency) -->
   <script>
-// Live Casino Math Companion - Core Application Logic
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Register Service Worker for PWA
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').catch(err => {
-      console.log('SW registration failed:', err);
+    // Tab Switching
+    const tabs = document.querySelectorAll('.nav-tab');
+    const panes = document.querySelectorAll('.tab-pane');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const targetId = `tab-${tab.getAttribute('data-tab')}`;
+        panes.forEach(pane => {
+          if (pane.id === targetId) pane.classList.remove('hidden');
+          else pane.classList.add('hidden');
+        });
+      });
     });
-  }
 
-  // Initialize Lucide Icons
-  if (window.lucide) {
-    window.lucide.createIcons();
-  }
-
-  // ==========================================
-  // 1. Web Audio API Sound Generator (No external assets required)
-  // ==========================================
-  let audioEnabled = true;
-  let audioCtx = null;
-
-  function initAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    // Sound Generator (Web Audio API)
+    let audioOn = true;
+    let audioCtx = null;
+    function playBeep(type) {
+      if (!audioOn) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+        if (type === 'win') {
+          osc.frequency.setValueAtTime(523, now);
+          osc.frequency.exponentialRampToValueAtTime(784, now + 0.15);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+          osc.start(now); osc.stop(now + 0.3);
+        } else if (type === 'loss') {
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.exponentialRampToValueAtTime(80, now + 0.2);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+          osc.start(now); osc.stop(now + 0.2);
+        }
+      } catch(e){}
     }
-  }
 
-  function playSound(type) {
-    if (!audioEnabled) return;
-    try {
-      initAudio();
-      if (!audioCtx) return;
+    document.getElementById('audioToggleBtn').addEventListener('click', () => {
+      audioOn = !audioOn;
+      document.getElementById('audioLabel').textContent = audioOn ? 'অডিও: চালু' : 'অডিও: বন্ধ';
+    });
 
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
+    // State & Live Engine
+    let state = {
+      cur: '৳',
+      start: 5000,
+      balance: 5000,
+      slPct: 30,
+      tpPct: 25,
+      maxTime: 20,
+      rounds: [],
+      lossStreak: 0,
+      startTime: Date.now()
+    };
 
-      const now = audioCtx.currentTime;
+    function updateTargets() {
+      state.start = parseFloat(document.getElementById('inputStartBankroll').value) || 5000;
+      state.cur = document.getElementById('selectCurrency').value;
+      state.slPct = parseInt(document.getElementById('rangeStopLoss').value);
+      state.tpPct = parseInt(document.getElementById('rangeTakeProfit').value);
+      state.maxTime = parseInt(document.getElementById('rangeMaxTime').value);
 
-      if (type === 'win') {
-        // High celebratory chime (two tones)
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(523.25, now); // C5
-        osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15); // G5
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-        osc.start(now);
-        osc.stop(now + 0.35);
-      } else if (type === 'loss') {
-        // Low dull thud
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(180, now);
-        osc.frequency.exponentialRampToValueAtTime(90, now + 0.2);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-        osc.start(now);
-        osc.stop(now + 0.25);
-      } else if (type === 'alert') {
-        // Urgent double siren
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(880, now);
-        osc.frequency.setValueAtTime(440, now + 0.15);
-        osc.frequency.setValueAtTime(880, now + 0.3);
-        gain.gain.setValueAtTime(0.25, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
-        osc.start(now);
-        osc.stop(now + 0.45);
-      }
-    } catch (e) {
-      console.warn('Audio play failed:', e);
-    }
-  }
-
-  // Audio Toggle Button
-  const audioToggleBtn = document.getElementById('audioToggleBtn');
-  const audioLabel = document.getElementById('audioLabel');
-  const audioIcon = document.getElementById('audioIcon');
-
-  audioToggleBtn.addEventListener('click', () => {
-    audioEnabled = !audioEnabled;
-    if (audioEnabled) {
-      audioLabel.textContent = 'অডিও অ্যালার্ট: চালু';
-      audioIcon.setAttribute('data-lucide', 'volume-2');
-      audioIcon.classList.remove('text-slate-500');
-      audioIcon.classList.add('text-emerald-400');
-      playSound('win');
-    } else {
-      audioLabel.textContent = 'অডিও অ্যালার্ট: বন্ধ';
-      audioIcon.setAttribute('data-lucide', 'volume-x');
-      audioIcon.classList.remove('text-emerald-400');
-      audioIcon.classList.add('text-slate-500');
-    }
-    if (window.lucide) window.lucide.createIcons();
-  });
-
-
-  // ==========================================
-  // 2. Navigation Tabs
-  // ==========================================
-  const navTabs = document.querySelectorAll('.nav-tab');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  navTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetId = `tab-${tab.getAttribute('data-tab')}`;
+      const u1 = Math.round(state.start * 0.01);
+      const u2 = Math.round(state.start * 0.02);
+      document.getElementById('displayUnitBet').textContent = `${state.cur} ${u1} - ${state.cur} ${u2}`;
+      document.getElementById('stopLossPctLabel').textContent = `-${state.slPct}%`;
+      document.getElementById('takeProfitPctLabel').textContent = `+${state.tpPct}%`;
+      document.getElementById('sessionMaxTimeLabel').textContent = `${state.maxTime} মিনিট`;
+      document.getElementById('stopLossTargetVal').textContent = `${state.cur} ${Math.round(state.start * (1 - state.slPct/100))}`;
+      document.getElementById('takeProfitTargetVal').textContent = `${state.cur} ${Math.round(state.start * (1 + state.tpPct/100))}`;
       
-      navTabs.forEach(t => t.classList.remove('active', 'bg-blue-600', 'text-white'));
-      tab.classList.add('active', 'bg-blue-600', 'text-white');
-
-      tabContents.forEach(content => {
-        if (content.id === targetId) {
-          content.classList.remove('hidden');
-          content.classList.add('block');
-        } else {
-          content.classList.add('hidden');
-          content.classList.remove('block');
-        }
-      });
-    });
-  });
-
-
-  // ==========================================
-  // 3. Live Session State & Bankroll Management
-  // ==========================================
-  let sessionState = {
-    currency: '৳',
-    startBankroll: 5000,
-    currentBalance: 5000,
-    stopLossPct: 30, // 30% loss
-    takeProfitPct: 25, // 25% profit
-    maxTimeMinutes: 20,
-    unitBetMin: 50,
-    unitBetMax: 100,
-    rounds: [],
-    consecutiveLosses: 0,
-    consecutiveWins: 0,
-    startTime: Date.now(),
-    timerInterval: null
-  };
-
-  // DOM Elements - Settings
-  const inputStartBankroll = document.getElementById('inputStartBankroll');
-  const selectCurrency = document.getElementById('selectCurrency');
-  const displayUnitBet = document.getElementById('displayUnitBet');
-  const rangeStopLoss = document.getElementById('rangeStopLoss');
-  const stopLossPctLabel = document.getElementById('stopLossPctLabel');
-  const stopLossTargetVal = document.getElementById('stopLossTargetVal');
-  const rangeTakeProfit = document.getElementById('rangeTakeProfit');
-  const takeProfitPctLabel = document.getElementById('takeProfitPctLabel');
-  const takeProfitTargetVal = document.getElementById('takeProfitTargetVal');
-  const rangeMaxTime = document.getElementById('rangeMaxTime');
-  const sessionMaxTimeLabel = document.getElementById('sessionMaxTimeLabel');
-  const applySetupBtn = document.getElementById('applySetupBtn');
-  const resetSessionBtn = document.getElementById('resetSessionBtn');
-
-  // DOM Elements - Live Metrics
-  const currentBalanceDisplay = document.getElementById('currentBalanceDisplay');
-  const bankrollChangeSubtext = document.getElementById('bankrollChangeSubtext');
-  const netPnLDisplay = document.getElementById('netPnLDisplay');
-  const roiPctDisplay = document.getElementById('roiPctDisplay');
-  const winRateDisplay = document.getElementById('winRateDisplay');
-  const totalRoundsDisplay = document.getElementById('totalRoundsDisplay');
-  const sessionTimerDisplay = document.getElementById('sessionTimerDisplay');
-  const sessionRiskStageDisplay = document.getElementById('sessionRiskStageDisplay');
-  const headerTimerVal = document.getElementById('headerTimerVal');
-
-  // Live Alert Elements
-  const liveAlertBanner = document.getElementById('liveAlertBanner');
-  const alertStatusDot = document.getElementById('alertStatusDot');
-  const alertStatusBadge = document.getElementById('alertStatusBadge');
-  const alertMessageText = document.getElementById('alertMessageText');
-  const lossChasingWarningBox = document.getElementById('lossChasingWarningBox');
-  const consecutiveLossCountText = document.getElementById('consecutiveLossCountText');
-  const streakBadge = document.getElementById('streakBadge');
-  const roundHistoryChips = document.getElementById('roundHistoryChips');
-
-  // Action Buttons
-  const quickBetAmount = document.getElementById('quickBetAmount');
-  const btnLogWin = document.getElementById('btnLogWin');
-  const btnLogLoss = document.getElementById('btnLogLoss');
-  const winBtnPreviewVal = document.getElementById('winBtnPreviewVal');
-  const lossBtnPreviewVal = document.getElementById('lossBtnPreviewVal');
-  const customPnLInput = document.getElementById('customPnLInput');
-  const btnSubmitCustom = document.getElementById('btnSubmitCustom');
-  const btnUndoRound = document.getElementById('btnUndoRound');
-
-  // Mini Floating HUD Elements
-  const compactModeBtn = document.getElementById('compactModeBtn');
-  const compactMiniHud = document.getElementById('compactMiniHud');
-  const closeMiniHudBtn = document.getElementById('closeMiniHudBtn');
-  const miniBalance = document.getElementById('miniBalance');
-  const miniPnL = document.getElementById('miniPnL');
-  const miniBtnWin = document.getElementById('miniBtnWin');
-  const miniBtnLoss = document.getElementById('miniBtnLoss');
-  const miniAlertText = document.getElementById('miniAlertText');
-
-
-  // Format Numbers with Currency
-  function formatMoney(amount) {
-    const sym = sessionState.currency;
-    return `${sym} ${Math.round(amount).toLocaleString('en-US')}`;
-  }
-
-  // Update Settings calculations
-  function updateCalculatedTargets() {
-    const start = parseFloat(inputStartBankroll.value) || 5000;
-    const cur = selectCurrency.value;
-    const slPct = parseInt(rangeStopLoss.value, 10);
-    const tpPct = parseInt(rangeTakeProfit.value, 10);
-    const maxTime = parseInt(rangeMaxTime.value, 10);
-
-    sessionState.startBankroll = start;
-    sessionState.currency = cur;
-    sessionState.stopLossPct = slPct;
-    sessionState.takeProfitPct = tpPct;
-    sessionState.maxTimeMinutes = maxTime;
-
-    // Unit Bet: 1% to 2%
-    const unit1 = Math.max(10, Math.round(start * 0.01));
-    const unit2 = Math.max(20, Math.round(start * 0.02));
-    sessionState.unitBetMin = unit1;
-    sessionState.unitBetMax = unit2;
-
-    displayUnitBet.textContent = `${cur} ${unit1} - ${cur} ${unit2}`;
-    stopLossPctLabel.textContent = `-${slPct}%`;
-    takeProfitPctLabel.textContent = `+${tpPct}%`;
-    sessionMaxTimeLabel.textContent = `${maxTime} মিনিট`;
-
-    const stopLossFloor = start * (1 - slPct / 100);
-    const takeProfitCeil = start * (1 + tpPct / 100);
-
-    stopLossTargetVal.textContent = `${cur} ${Math.round(stopLossFloor).toLocaleString()}`;
-    takeProfitTargetVal.textContent = `${cur} ${Math.round(takeProfitCeil).toLocaleString()}`;
-
-    // Update Quick Bet preview
-    const betVal = parseFloat(quickBetAmount.value) || unit1;
-    winBtnPreviewVal.textContent = `+${cur}${betVal}`;
-    lossBtnPreviewVal.textContent = `-${cur}${betVal}`;
-
-    document.querySelectorAll('.currencyLabel').forEach(el => el.textContent = cur);
-    const currDisplay = document.getElementById('currencySymbolDisplay');
-    if (currDisplay) currDisplay.textContent = cur;
-  }
-
-  inputStartBankroll.addEventListener('input', updateCalculatedTargets);
-  selectCurrency.addEventListener('change', updateCalculatedTargets);
-  rangeStopLoss.addEventListener('input', updateCalculatedTargets);
-  rangeTakeProfit.addEventListener('input', updateCalculatedTargets);
-  rangeMaxTime.addEventListener('input', updateCalculatedTargets);
-  quickBetAmount.addEventListener('input', updateCalculatedTargets);
-
-  // Apply Setup / Start Fresh
-  applySetupBtn.addEventListener('click', () => {
-    updateCalculatedTargets();
-    sessionState.currentBalance = sessionState.startBankroll;
-    sessionState.rounds = [];
-    sessionState.consecutiveLosses = 0;
-    sessionState.consecutiveWins = 0;
-    sessionState.startTime = Date.now();
-    startTimer();
-    renderLiveDashboard();
-    playSound('win');
-  });
-
-  resetSessionBtn.addEventListener('click', () => {
-    if (confirm('আপনি কি নিশ্চিত যে সম্পূর্ণ সেশন ডেটা রিসেট করতে চান?')) {
-      sessionState.currentBalance = sessionState.startBankroll;
-      sessionState.rounds = [];
-      sessionState.consecutiveLosses = 0;
-      sessionState.consecutiveWins = 0;
-      sessionState.startTime = Date.now();
-      renderLiveDashboard();
+      const bet = parseFloat(document.getElementById('quickBetAmount').value) || u1;
+      document.getElementById('winBtnPreviewVal').textContent = `+${state.cur}${bet}`;
+      document.getElementById('lossBtnPreviewVal').textContent = `-${state.cur}${bet}`;
+      document.querySelectorAll('.currencyLabel').forEach(el => el.textContent = state.cur);
     }
-  });
 
+    document.getElementById('inputStartBankroll').addEventListener('input', updateTargets);
+    document.getElementById('selectCurrency').addEventListener('change', updateTargets);
+    document.getElementById('rangeStopLoss').addEventListener('input', updateTargets);
+    document.getElementById('rangeTakeProfit').addEventListener('input', updateTargets);
+    document.getElementById('rangeMaxTime').addEventListener('input', updateTargets);
+    document.getElementById('quickBetAmount').addEventListener('input', updateTargets);
 
-  // ==========================================
-  // 4. Timer & Time-Decay Warnings
-  // ==========================================
-  function startTimer() {
-    if (sessionState.timerInterval) clearInterval(sessionState.timerInterval);
-    sessionState.startTime = Date.now();
+    document.getElementById('applySetupBtn').addEventListener('click', () => {
+      updateTargets();
+      state.balance = state.start;
+      state.rounds = [];
+      state.lossStreak = 0;
+      state.startTime = Date.now();
+      render();
+    });
 
-    sessionState.timerInterval = setInterval(() => {
-      const elapsedSeconds = Math.floor((Date.now() - sessionState.startTime) / 1000);
-      const minutes = Math.floor(elapsedSeconds / 60);
-      const seconds = elapsedSeconds % 60;
-      const formatted = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    document.getElementById('resetSessionBtn').addEventListener('click', () => {
+      if (confirm('সেশন রিসেট করতে চান?')) {
+        state.balance = state.start;
+        state.rounds = [];
+        state.lossStreak = 0;
+        state.startTime = Date.now();
+        render();
+      }
+    });
 
-      sessionTimerDisplay.textContent = formatted;
-      headerTimerVal.textContent = formatted;
-
-      // Risk stage evaluation
-      if (minutes >= sessionState.maxTimeMinutes) {
-        sessionRiskStageDisplay.textContent = '🚨 সর্বোচ্চ সময়সীমা পার!';
-        sessionRiskStageDisplay.className = 'text-[11px] text-rose-400 font-bold mt-0.5 block animate-pulse';
-      } else if (minutes >= sessionState.maxTimeMinutes * 0.75) {
-        sessionRiskStageDisplay.textContent = '⚠️ সেশন দীর্ঘ হচ্ছে (ঝুঁকি বাড়ছে)';
-        sessionRiskStageDisplay.className = 'text-[11px] text-amber-400 font-medium mt-0.5 block';
+    function log(pnl) {
+      state.balance += pnl;
+      if (pnl > 0) {
+        state.lossStreak = 0;
+        playBeep('win');
       } else {
-        sessionRiskStageDisplay.textContent = '✅ নিরাপদ খেলার উইন্ডো';
-        sessionRiskStageDisplay.className = 'text-[11px] text-emerald-400 font-medium mt-0.5 block';
+        state.lossStreak++;
+        playBeep('loss');
+      }
+      state.rounds.push({ pnl, isWin: pnl > 0 });
+      render();
+    }
+
+    document.getElementById('btnLogWin').addEventListener('click', () => {
+      const b = parseFloat(document.getElementById('quickBetAmount').value) || 100;
+      log(b);
+    });
+
+    document.getElementById('btnLogLoss').addEventListener('click', () => {
+      const b = parseFloat(document.getElementById('quickBetAmount').value) || 100;
+      log(-b);
+    });
+
+    document.getElementById('btnUndoRound').addEventListener('click', () => {
+      if (state.rounds.length > 0) {
+        const last = state.rounds.pop();
+        state.balance -= last.pnl;
+        render();
+      }
+    });
+
+    function render() {
+      const net = state.balance - state.start;
+      const roi = ((net / state.start) * 100).toFixed(1);
+      
+      document.getElementById('currentBalanceDisplay').textContent = `${state.cur} ${Math.round(state.balance).toLocaleString()}`;
+      document.getElementById('bankrollChangeSubtext').textContent = `শুরু: ${state.cur} ${Math.round(state.start).toLocaleString()}`;
+      
+      const pnlEl = document.getElementById('netPnLDisplay');
+      if (net >= 0) {
+        pnlEl.textContent = `+${state.cur} ${Math.round(net).toLocaleString()}`;
+        pnlEl.className = 'stat-val text-emerald';
+      } else {
+        pnlEl.textContent = `-${state.cur} ${Math.round(Math.abs(net)).toLocaleString()}`;
+        pnlEl.className = 'stat-val text-rose';
+      }
+      document.getElementById('roiPctDisplay').textContent = `ROI: ${roi}%`;
+
+      const tot = state.rounds.length;
+      const wins = state.rounds.filter(r => r.isWin).length;
+      document.getElementById('winRateDisplay').textContent = tot > 0 ? `${Math.round(wins/tot*100)}%` : '০%';
+      document.getElementById('totalRoundsDisplay').textContent = `${tot} রাউন্ড (${wins}W / ${tot-wins}L)`;
+
+      // Chips
+      const chipsEl = document.getElementById('roundHistoryChips');
+      if (tot === 0) {
+        chipsEl.innerHTML = '<span style="color:#64748b; font-size:11px;">উপরে WIN বা LOSS বাটনে চাপুন।</span>';
+      } else {
+        chipsEl.innerHTML = state.rounds.slice(-12).map(r => 
+          `<span class="chip ${r.isWin ? 'chip-win' : 'chip-loss'}">${r.isWin ? '+' : ''}${r.pnl}</span>`
+        ).join('');
       }
 
-      checkSessionHealthAlerts();
+      // Alerts
+      const slLimit = state.start * (1 - state.slPct/100);
+      const tpLimit = state.start * (1 + state.tpPct/100);
+      const banner = document.getElementById('liveAlertBanner');
+      const badge = document.getElementById('alertStatusBadge');
+      const txt = document.getElementById('alertMessageText');
+      const dot = document.getElementById('alertStatusDot');
+
+      if (state.balance <= slLimit) {
+        badge.textContent = '🚨 স্টপ-লস ট্রিগার!';
+        badge.style.color = '#ef4444';
+        txt.textContent = 'ক্ষতিসীমায় পৌঁছেছেন! এখনই খেলা বন্ধ করুন, লস রিকভারের চেষ্টা করবেন না!';
+        dot.style.background = '#ef4444';
+      } else if (state.balance >= tpLimit) {
+        badge.textContent = '🎉 টার্গেট প্রফিট!';
+        badge.style.color = '#10b981';
+        txt.textContent = 'অভিনন্দন! কাঙ্ক্ষিত লাভ অর্জিত হয়েছে, ক্যাশআউট করে টেবিল ছাড়ুন!';
+        dot.style.background = '#10b981';
+      } else if (state.lossStreak >= 3) {
+        document.getElementById('lossChasingWarningBox').classList.remove('hidden');
+        document.getElementById('consecutiveLossCountText').textContent = state.lossStreak;
+        badge.textContent = '⚠️ লস চেসিং সতর্কতা';
+        badge.style.color = '#f59e0b';
+        txt.textContent = 'পরপর হার! বাজি দ্বিগুণ করবেন না, মাথা ঠান্ডা রাখুন।';
+        dot.style.background = '#f59e0b';
+      } else {
+        document.getElementById('lossChasingWarningBox').classList.add('hidden');
+        badge.textContent = 'সেশন নিরাপদ';
+        badge.style.color = '#10b981';
+        txt.textContent = `প্রতি বাজিতে ${state.cur} ${Math.round(state.start*0.01)} - ${state.cur} ${Math.round(state.start*0.02)} এর মধ্যে সীমাবদ্ধ থাকুন।`;
+        dot.style.background = '#10b981';
+      }
+    }
+
+    // Timer
+    setInterval(() => {
+      const sec = Math.floor((Date.now() - state.startTime) / 1000);
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      document.getElementById('sessionTimerDisplay').textContent = `${m}:${s}`;
+      document.getElementById('headerTimerVal').textContent = `${m}:${s}`;
     }, 1000);
-  }
 
-  startTimer();
-
-
-  // ==========================================
-  // 5. Live Round Logging (Win / Loss)
-  // ==========================================
-  function logRound(pnlChange) {
-    const betSize = Math.abs(pnlChange);
-    const newBalance = sessionState.currentBalance + pnlChange;
-    const isWin = pnlChange > 0;
-
-    sessionState.currentBalance = newBalance;
-
-    if (isWin) {
-      sessionState.consecutiveWins++;
-      sessionState.consecutiveLosses = 0;
-      playSound('win');
-    } else {
-      sessionState.consecutiveLosses++;
-      sessionState.consecutiveWins = 0;
-      playSound('loss');
-    }
-
-    sessionState.rounds.push({
-      id: Date.now(),
-      pnl: pnlChange,
-      balanceAfter: newBalance,
-      isWin,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-    });
-
-    renderLiveDashboard();
-  }
-
-  btnLogWin.addEventListener('click', () => {
-    const bet = parseFloat(quickBetAmount.value) || sessionState.unitBetMin;
-    logRound(bet);
-  });
-
-  btnLogLoss.addEventListener('click', () => {
-    const bet = parseFloat(quickBetAmount.value) || sessionState.unitBetMin;
-    logRound(-bet);
-  });
-
-  btnSubmitCustom.addEventListener('click', () => {
-    const val = parseFloat(customPnLInput.value);
-    if (!isNaN(val) && val !== 0) {
-      logRound(val);
-      customPnLInput.value = '';
-    }
-  });
-
-  btnUndoRound.addEventListener('click', () => {
-    if (sessionState.rounds.length > 0) {
-      const last = sessionState.rounds.pop();
-      sessionState.currentBalance -= last.pnl;
-      // recalculate streaks
-      recalcStreaks();
-      renderLiveDashboard();
-    }
-  });
-
-  function recalcStreaks() {
-    let lossCount = 0;
-    let winCount = 0;
-    for (let i = sessionState.rounds.length - 1; i >= 0; i--) {
-      const r = sessionState.rounds[i];
-      if (r.isWin) {
-        if (lossCount === 0) winCount++;
-        else break;
+    // Crash Radar
+    const crashSlider = document.getElementById('crashMultiplierSlider');
+    function updateCrash() {
+      const m = parseFloat(crashSlider.value);
+      document.getElementById('crashMultiplierVal').textContent = `${m.toFixed(2)}x`;
+      const win = Math.min(97, (0.97 / m) * 100);
+      document.getElementById('crashWinChanceText').textContent = `${win.toFixed(1)}%`;
+      document.getElementById('crashRiskChanceText').textContent = `${(100 - win).toFixed(1)}%`;
+      const title = document.getElementById('crashRiskCategoryTitle');
+      const advice = document.getElementById('crashRiskAdviceText');
+      if (m <= 1.30) {
+        title.textContent = 'ঝুঁকি স্তর: মাইক্রো / তুলনামূলক নিরাপদ';
+        advice.textContent = 'ছোট লাভে ক্যাশআউট করা তুলনামূলক নিরাপদ, তবে ৩% ইনস্ট্যান্ট ক্র্যাশ সবসময়ের ঝুঁকি।';
+      } else if (m <= 2.00) {
+        title.textContent = 'ঝুঁকি স্তর: মাঝারি (৫০% ক্র্যাশ রেট)';
+        advice.textContent = '২.০০x-এ প্রায় অর্ধেক রাউন্ডই লস হবে। বাজি ছোট রাখুন।';
       } else {
-        if (winCount === 0) lossCount++;
-        else break;
+        title.textContent = 'ঝুঁকি স্তর: চরম ঝুঁকি (৮০%+ লস)';
+        advice.textContent = 'উচ্চ মাল্টিপ্লায়ারের জন্য অপেক্ষা করা হলো টাকা হারানোর নিশ্চিত উপায়।';
       }
     }
-    sessionState.consecutiveLosses = lossCount;
-    sessionState.consecutiveWins = winCount;
-  }
+    crashSlider.addEventListener('input', updateCrash);
+    updateCrash();
 
+    // Blackjack Basic Strategy
+    let dCard = '2';
+    let hType = 'hard';
+    let pHand = '12';
+    const hOptions = {
+      hard: ['5-8', '9', '10', '11', '12', '13-16', '17+'],
+      soft: ['A,2-A,3', 'A,4-A,5', 'A,6-A,7', 'A,8+'],
+      pairs: ['2,2-3,3', '4,4-5,5', '6,6-7,7', '8,8', '9,9', '10,10', 'A,A']
+    };
 
-  // ==========================================
-  // 6. Live Dashboard & Real-Time Alert Engine
-  // ==========================================
-  function renderLiveDashboard() {
-    const start = sessionState.startBankroll;
-    const current = sessionState.currentBalance;
-    const netPnL = current - start;
-    const roi = ((netPnL / start) * 100).toFixed(1);
-
-    // Update Counter texts
-    currentBalanceDisplay.textContent = formatMoney(current);
-    bankrollChangeSubtext.textContent = `প্রারম্ভিক: ${formatMoney(start)}`;
-
-    if (netPnL >= 0) {
-      netPnLDisplay.textContent = `+${formatMoney(netPnL)}`;
-      netPnLDisplay.className = 'text-xl md:text-2xl font-bold font-mono mt-1 text-emerald-400';
-      roiPctDisplay.textContent = `ROI: +${roi}% (লাভজনক)`;
-      roiPctDisplay.className = 'text-[11px] font-mono mt-0.5 block text-emerald-400';
-    } else {
-      netPnLDisplay.textContent = `-${formatMoney(Math.abs(netPnL))}`;
-      netPnLDisplay.className = 'text-xl md:text-2xl font-bold font-mono mt-1 text-rose-400';
-      roiPctDisplay.textContent = `ROI: ${roi}% (ক্ষতি)`;
-      roiPctDisplay.className = 'text-[11px] font-mono mt-0.5 block text-rose-400';
+    function renderHands() {
+      const grid = document.getElementById('playerHandValuesGrid');
+      grid.innerHTML = hOptions[hType].map(val => 
+        `<button class="btn-pick ${val === pHand ? 'active' : ''}" onclick="selectHand('${val}')">${val}</button>`
+      ).join('');
+      calcBJ();
     }
+    window.selectHand = function(val) {
+      pHand = val;
+      renderHands();
+    };
 
-    // Win Rate
-    const totalRounds = sessionState.rounds.length;
-    const winRounds = sessionState.rounds.filter(r => r.isWin).length;
-    const winRate = totalRounds > 0 ? ((winRounds / totalRounds) * 100).toFixed(0) : '০';
-    winRateDisplay.textContent = `${winRate}%`;
-    totalRoundsDisplay.textContent = `${totalRounds} টি রাউন্ড (${winRounds}W / ${totalRounds - winRounds}L)`;
-
-    // History Chips
-    renderHistoryChips();
-
-    // Mini Mode Updates
-    miniBalance.textContent = formatMoney(current);
-    miniPnL.textContent = (netPnL >= 0 ? '+' : '') + formatMoney(netPnL);
-    miniPnL.className = netPnL >= 0 ? 'text-sm font-bold text-emerald-400' : 'text-sm font-bold text-rose-400';
-
-    // Health Alerts
-    checkSessionHealthAlerts();
-  }
-
-  function renderHistoryChips() {
-    if (sessionState.rounds.length === 0) {
-      roundHistoryChips.innerHTML = '<span class="text-slate-500 italic text-[11px]">এখনো কোনো রাউন্ড রেকর্ড করা হয়নি। উপরে WIN বা LOSS বাটনে চাপুন।</span>';
-      streakBadge.textContent = 'স্ট্রিক: নিরপেক্ষ';
-      streakBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700';
-      return;
-    }
-
-    // Show last 12 rounds
-    const recent = sessionState.rounds.slice(-12);
-    let chipsHtml = '';
-    recent.forEach(r => {
-      const cls = r.isWin ? 'round-chip-win' : 'round-chip-loss';
-      const label = r.isWin ? `+${r.pnl}` : `${r.pnl}`;
-      chipsHtml += `<span class="round-chip ${cls}">${label}</span>`;
-    });
-    roundHistoryChips.innerHTML = chipsHtml;
-
-    // Streak badge
-    if (sessionState.consecutiveLosses >= 2) {
-      streakBadge.textContent = `🚨 ${sessionState.consecutiveLosses} বার হার (সতর্কতা)`;
-      streakBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/40 font-bold';
-    } else if (sessionState.consecutiveWins >= 2) {
-      streakBadge.textContent = `🔥 ${sessionState.consecutiveWins} বার জয় (স্ট্রিক)`;
-      streakBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-bold';
-    } else {
-      streakBadge.textContent = 'স্ট্রিক: স্বাভাবিক';
-      streakBadge.className = 'text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700';
-    }
-  }
-
-
-  // ==========================================
-  // 7. Dynamic Alert Evaluator (The Brain of the Live Assistant)
-  // ==========================================
-  function checkSessionHealthAlerts() {
-    const start = sessionState.startBankroll;
-    const current = sessionState.currentBalance;
-    const netPnL = current - start;
-    const stopLossLimit = start * (1 - sessionState.stopLossPct / 100);
-    const takeProfitLimit = start * (1 + sessionState.takeProfitPct / 100);
-    const elapsedMinutes = Math.floor((Date.now() - sessionState.startTime) / 60000);
-
-    // Rule 1: STOP LOSS REACHED (CRITICAL)
-    if (current <= stopLossLimit) {
-      triggerBannerAlert(
-        'danger',
-        'স্টপ-লস ট্রিগার হয়েছে!',
-        `🚨 আপনি পূর্বনির্ধারিত -${sessionState.stopLossPct}% ক্ষতিসীমায় পৌঁছেছেন! এখনই খেলা বন্ধ করুন। লস রিকভার করার চেষ্টা করলে সব খোয়াবেন!`
-      );
-      miniAlertText.innerHTML = `<span class="text-rose-400 font-bold">🚨 স্টপ-লস ট্রিগার! খেলা বন্ধ করুন!</span>`;
-      playSound('alert');
-      return;
-    }
-
-    // Rule 2: TAKE PROFIT REACHED (GOAL ACHIEVED)
-    if (current >= takeProfitLimit) {
-      triggerBannerAlert(
-        'success',
-        'টার্গেট প্রফিট অর্জিত!',
-        `🎉 অভিনন্দন! আপনি +${sessionState.takeProfitPct}% লাভ করেছেন (${formatMoney(netPnL)})! ক্যাসিনোর ল অব লার্জ নাম্বার্স কার্যকর হওয়ার আগেই ক্যাশআউট করে টেবিল ছাড়ুন!`
-      );
-      miniAlertText.innerHTML = `<span class="text-emerald-400 font-bold">🎉 টার্গেট প্রফিট! ক্যাশআউট করুন ও টেবিল ছাড়ুন!</span>`;
-      return;
-    }
-
-    // Rule 3: CONSECUTIVE LOSSES (CHASING LOSSES ALERT)
-    if (sessionState.consecutiveLosses >= 3) {
-      lossChasingWarningBox.classList.remove('hidden');
-      consecutiveLossCountText.textContent = sessionState.consecutiveLosses;
-
-      triggerBannerAlert(
-        'warning',
-        'লস চেসিং সতর্কতা',
-        `⚠️ পরপর ${sessionState.consecutiveLosses} বার হার! আবেগ নিয়ন্ত্রণ করুন। বাজি বাড়ানোর ভুল করবেন না (No Martingale)!`
-      );
-      miniAlertText.innerHTML = `<span class="text-amber-400 font-bold">⚠️ ${sessionState.consecutiveLosses}x হার! বাজি দ্বিগুণ করবেন না!</span>`;
-      return;
-    } else {
-      lossChasingWarningBox.classList.add('hidden');
-    }
-
-    // Rule 4: MAX TIME EXCEEDED
-    if (elapsedMinutes >= sessionState.maxTimeMinutes) {
-      triggerBannerAlert(
-        'warning',
-        'সময়সীমা অতিক্রান্ত',
-        `⏰ আপনি ${sessionState.maxTimeMinutes} মিনিটের বেশি খেলছেন। যত বেশিক্ষণ খেলবেন ক্যাসিনোর হাউস এজ তত বেশি আপনাকে গ্রাস করবে। বিরতি নিন!`
-      );
-      miniAlertText.innerHTML = `<span class="text-amber-400 font-bold">⏰ সেশন সময় শেষ! ক্যাসিনো ছাড়ুন!</span>`;
-      return;
-    }
-
-    // Default Normal State
-    triggerBannerAlert(
-      'normal',
-      'সেশন নিরাপদ',
-      `ব্যাংক রোল ডিসিপ্লিন মেনে খেলুন। প্রতি বাজিতে ${formatMoney(sessionState.unitBetMin)} - ${formatMoney(sessionState.unitBetMax)} এর মধ্যে সীমাবদ্ধ থাকুন।`
-    );
-    miniAlertText.textContent = `১%-২% রুল মেনে চলুন। স্টপ লসে পৌঁছালে খেলা বন্ধ করুন।`;
-  }
-
-  function triggerBannerAlert(type, badgeText, message) {
-    alertStatusBadge.textContent = badgeText;
-    alertMessageText.textContent = message;
-
-    if (type === 'danger') {
-      liveAlertBanner.className = 'bg-rose-950/90 border-b border-rose-600/80 py-2.5 px-4 transition-all duration-300 stop-loss-pulse';
-      alertStatusDot.className = 'w-3 h-3 rounded-full bg-rose-500 animate-ping';
-      alertStatusBadge.className = 'text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40';
-    } else if (type === 'success') {
-      liveAlertBanner.className = 'bg-emerald-950/90 border-b border-emerald-600/80 py-2.5 px-4 transition-all duration-300 take-profit-pulse';
-      alertStatusDot.className = 'w-3 h-3 rounded-full bg-emerald-400 animate-bounce';
-      alertStatusBadge.className = 'text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-    } else if (type === 'warning') {
-      liveAlertBanner.className = 'bg-amber-950/90 border-b border-amber-600/80 py-2.5 px-4 transition-all duration-300';
-      alertStatusDot.className = 'w-3 h-3 rounded-full bg-amber-400 animate-pulse';
-      alertStatusBadge.className = 'text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40';
-    } else {
-      liveAlertBanner.className = 'bg-slate-900 border-b border-slate-800 py-2.5 px-4 transition-all duration-300';
-      alertStatusDot.className = 'w-3 h-3 rounded-full bg-emerald-500 animate-pulse';
-      alertStatusBadge.className = 'text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
-    }
-  }
-
-
-  // ==========================================
-  // 8. Compact Mini Floating HUD Controls
-  // ==========================================
-  compactModeBtn.addEventListener('click', () => {
-    compactMiniHud.classList.toggle('hidden');
-  });
-
-  closeMiniHudBtn.addEventListener('click', () => {
-    compactMiniHud.classList.add('hidden');
-  });
-
-  miniBtnWin.addEventListener('click', () => {
-    const bet = parseFloat(quickBetAmount.value) || sessionState.unitBetMin;
-    logRound(bet);
-  });
-
-  miniBtnLoss.addEventListener('click', () => {
-    const bet = parseFloat(quickBetAmount.value) || sessionState.unitBetMin;
-    logRound(-bet);
-  });
-
-
-  // ==========================================
-  // 9. Crash / Aviator Math Radar Engine
-  // ==========================================
-  const crashMultiplierSlider = document.getElementById('crashMultiplierSlider');
-  const crashMultiplierVal = document.getElementById('crashMultiplierVal');
-  const crashWinChanceText = document.getElementById('crashWinChanceText');
-  const crashRiskChanceText = document.getElementById('crashRiskChanceText');
-  const crashRiskAssessmentBox = document.getElementById('crashRiskAssessmentBox');
-  const crashRiskCategoryTitle = document.getElementById('crashRiskCategoryTitle');
-  const crashRiskAdviceText = document.getElementById('crashRiskAdviceText');
-  const crashEVText = document.getElementById('crashEVText');
-  const crashPresetBtns = document.querySelectorAll('.crashPresetBtn');
-
-  function calculateCrashProbabilities(multiplier) {
-    // Standard Crash Game RTP is 97% (House Edge 3%), plus ~3% insta-crash at 1.00x
-    const rtp = 0.97;
-    let winProb = (rtp / multiplier) * 100;
-    if (winProb > 97) winProb = 97;
-    const crashRisk = 100 - winProb;
-
-    // Expected value on a 100 bet: (winProb/100 * multiplier * 100) - 100 = -3
-    const ev = (winProb / 100 * multiplier * 100) - 100;
-
-    crashMultiplierVal.textContent = `${multiplier.toFixed(2)}x`;
-    crashWinChanceText.textContent = `${winProb.toFixed(1)}%`;
-    crashRiskChanceText.textContent = `${crashRisk.toFixed(1)}%`;
-    crashEVText.textContent = `${ev.toFixed(1)} ৳ প্রতি ১০০ ৳ বাজিতে (হাউস এজ ৩%)`;
-
-    // Dynamic advice and risk meter
-    if (multiplier <= 1.30) {
-      crashRiskCategoryTitle.textContent = 'ঝুঁকি স্তর: মাইক্রো / তুলনামূলক নিরাপদ';
-      crashRiskCategoryTitle.className = 'text-emerald-400 font-bold';
-      crashRiskAssessmentBox.className = 'p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs';
-      crashRiskAdviceText.textContent = `জেতার সম্ভাবনা প্রায় ${(winProb).toFixed(0)}%। ছোট প্রফিট নিয়ে উঠে যাওয়ার জন্য ১.১০x থেকে ১.৩০x অটো-ক্যাশআউট সবচেয়ে বাস্তবসম্মত কৌশল। তবে প্রতি রাউন্ডেই ৩% ইনস্ট্যান্ট ক্র্যাশের ঝুঁকি রয়ে যায়।`;
-    } else if (multiplier <= 2.00) {
-      crashRiskCategoryTitle.textContent = 'ঝুঁকি স্তর: মাঝারি (৫০% এর বেশি ক্র্যাশ রেট)';
-      crashRiskCategoryTitle.className = 'text-amber-400 font-bold';
-      crashRiskAssessmentBox.className = 'p-4 rounded-xl bg-amber-950/40 border border-amber-500/30 text-xs';
-      crashRiskAdviceText.textContent = `২.০০x মাল্টিপ্লায়ারে জেতার সম্ভাবনা মাত্র ৪৮.৫% (অর্থাৎ প্রতি ১০০ বারে ৫১ বারই এর নিচে ক্র্যাশ করে)। টানা ৩-৪ বার লসের সম্ভাবনা অত্যন্ত প্রবল।`;
-    } else if (multiplier <= 5.00) {
-      crashRiskCategoryTitle.textContent = 'ঝুঁকি স্তর: উচ্চ ঝুঁকি (৮০% এর বেশি ক্র্যাশ)';
-      crashRiskCategoryTitle.className = 'text-rose-400 font-bold';
-      crashRiskAssessmentBox.className = 'p-4 rounded-xl bg-rose-950/40 border border-rose-500/30 text-xs';
-      crashRiskAdviceText.textContent = `৫.০০x মাল্টিপ্লায়ারে আপনার জেতার সম্ভাবনা মাত্র ১৯.৪%, অর্থাৎ ৮০% এর বেশি সময়ে আপনার সম্পূর্ণ বাজি পুড়ে যাবে। এটি দিয়ে নিয়মিত লাভের আশা করা অসম্ভব।`;
-    } else {
-      crashRiskCategoryTitle.textContent = 'ঝুঁকি স্তর: চরম ফাঁদ (৯১% নিশ্চিত লস)';
-      crashRiskCategoryTitle.className = 'text-red-400 font-bold';
-      crashRiskAssessmentBox.className = 'p-4 rounded-xl bg-red-950/60 border border-red-500/50 text-xs';
-      crashRiskAdviceText.textContent = `১০.০০x এর জন্য অপেক্ষা করা মানে নিজের চোখে লটারির মতো টিকিট কেনা। ৯০% এর বেশি ক্ষেত্রে রকেট আগেই ধ্বংস হয়ে যায়। টেলিগ্রামের "১০x প্রেডিক্টর" ফেক স্ক্রিনশট দেখে বিভ্রান্ত হবেন না!`;
-    }
-  }
-
-  crashMultiplierSlider.addEventListener('input', (e) => {
-    calculateCrashProbabilities(parseFloat(e.target.value));
-  });
-
-  crashPresetBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const m = parseFloat(btn.getAttribute('data-mult'));
-      crashMultiplierSlider.value = m;
-      calculateCrashProbabilities(m);
-    });
-  });
-
-  calculateCrashProbabilities(1.50);
-
-
-  // ==========================================
-  // 10. Blackjack Basic Strategy Engine
-  // ==========================================
-  const dealerCardButtons = document.querySelectorAll('.dealer-card-btn');
-  const handTypeButtons = document.querySelectorAll('.hand-type-btn');
-  const playerHandValuesGrid = document.getElementById('playerHandValuesGrid');
-  const bjActionText = document.getElementById('bjActionText');
-  const bjActionExplanation = document.getElementById('bjActionExplanation');
-  const bjDecisionBox = document.getElementById('bjDecisionBox');
-  const bjSummaryPlayer = document.getElementById('bjSummaryPlayer');
-  const bjSummaryDealer = document.getElementById('bjSummaryDealer');
-
-  let selectedDealerCard = '2';
-  let selectedHandType = 'hard';
-  let selectedPlayerHand = '12';
-
-  const handOptions = {
-    hard: ['5-8', '9', '10', '11', '12', '13', '14', '15', '16', '17+'],
-    soft: ['A,2', 'A,3', 'A,4', 'A,5', 'A,6', 'A,7', 'A,8', 'A,9+'],
-    pairs: ['2,2', '3,3', '4,4', '5,5', '6,6', '7,7', '8,8', '9,9', '10,10', 'A,A']
-  };
-
-  function renderPlayerHandButtons() {
-    playerHandValuesGrid.innerHTML = '';
-    const options = handOptions[selectedHandType];
-
-    options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = `player-hand-btn py-2 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono font-bold text-white border border-slate-700 ${opt === selectedPlayerHand ? 'active' : ''}`;
-      btn.textContent = opt;
+    document.querySelectorAll('#dealerCardButtons .btn-pick').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.player-hand-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('#dealerCardButtons .btn-pick').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        selectedPlayerHand = opt;
-        evaluateBlackjackStrategy();
+        dCard = btn.getAttribute('data-val');
+        calcBJ();
       });
-      playerHandValuesGrid.appendChild(btn);
     });
-  }
 
-  dealerCardButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      dealerCardButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedDealerCard = btn.getAttribute('data-val');
-      evaluateBlackjackStrategy();
+    document.querySelectorAll('.hand-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.hand-type-btn').forEach(b => b.classList.remove('active', 'btn-accent'));
+        btn.classList.add('active', 'btn-accent');
+        hType = btn.getAttribute('data-type');
+        pHand = hOptions[hType][0];
+        renderHands();
+      });
     });
-  });
 
-  handTypeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      handTypeButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedHandType = btn.getAttribute('data-type');
-      selectedPlayerHand = handOptions[selectedHandType][0];
-      renderPlayerHandButtons();
-      evaluateBlackjackStrategy();
-    });
-  });
-
-  renderPlayerHandButtons();
-
-  function evaluateBlackjackStrategy() {
-    const d = selectedDealerCard;
-    const p = selectedPlayerHand;
-    const isDealerBustCard = ['4', '5', '6'].includes(d);
-    const isDealerWeak = ['2', '3', '4', '5', '6'].includes(d);
-    const isDealerStrong = ['7', '8', '9', '10', 'A'].includes(d);
-
-    let action = 'HIT';
-    let explanation = '';
-    let badgeColor = 'emerald';
-
-    if (selectedHandType === 'hard') {
-      if (['5-8'].includes(p)) {
-        action = 'HIT (হিট নিন)';
-        explanation = 'আপনার স্কোর খুবই কম। কখনোই বাস্ট হবেন না, তাই কার্ড টানা আবশ্যক।';
-      } else if (p === '9') {
-        if (['3', '4', '5', '6'].includes(d)) {
-          action = 'DOUBLE (ডাবল ডাউন করুন)';
-          explanation = 'ডিলারের কার্ড দুর্বল। ডাবল বাজি ধরে ১টি কার্ড নেওয়াই সর্বোচ্চ লাভজনক গাণিতিক মুভ।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'ডিলারের স্ট্রং কার্ডের বিরুদ্ধে বাজি না বাড়িয়ে সাধারণ হিট নিন।';
-        }
-      } else if (p === '10') {
-        if (['2', '3', '4', '5', '6', '7', '8', '9'].includes(d)) {
-          action = 'DOUBLE (ডাবল ডাউন করুন)';
-          explanation = '১০ স্কোর নিয়ে ডাবল করা ব্ল্যাকজ্যাকের অন্যতম সেরা সম্ভাবনাময় চাল।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'ডিলারের ১০ বা A আছে, তাই বাজি দ্বিগুণ না করে হিট নিন।';
-        }
-      } else if (p === '11') {
-        if (d !== 'A') {
-          action = 'DOUBLE (ডাবল ডাউন করুন)';
-          explanation = '১১ স্কোরে সবসময় ডাবল ডাউন সেরা, কারণ ১০ পয়েন্ট কার্ডের সংখ্যা ডেক-এ সবচেয়ে বেশি।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'ডিলারের A থাকলে ডাবল না করে হিট নেওয়া নিরাপদ।';
-        }
-      } else if (p === '12') {
-        if (['4', '5', '6'].includes(d)) {
-          action = 'STAND (স্ট্যান্ড / থামুন)';
-          explanation = 'ডিলারের ৪, ৫ বা ৬ কার্ড বাস্ট হওয়ার সম্ভাবনা ৪০% এর বেশি। নিজে বাস্ট না হয়ে ডিলারের ভুলের সুযোগ নিন।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'ডিলারের ২, ৩ অথবা ৭+ আছে। ১২ পয়েন্টে বাস্ট হওয়ার ঝুঁকি মেনেও হিট নেওয়াই অংকের নিয়ম।';
-        }
-      } else if (['13', '14', '15', '16'].includes(p)) {
-        if (isDealerWeak) {
-          action = 'STAND (স্ট্যান্ড / থামুন)';
-          explanation = 'ডিলার দুর্বল জোনে আছে (২ থেকে ৬)। আপনি অতিরিক্ত কার্ড নিয়ে বাস্ট হবেন না। ডিলারকে বাস্ট হতে দিন।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'ডিলারের ৭ বা তার বেশি আছে। আপনি দাঁড়িয়ে থাকলে ডিলার নিশ্চিতভাবে জিতবে, তাই হিট নিয়ে ঝুঁকি নেওয়া বাধ্যতামূলক।';
-        }
-      } else { // 17+
-        action = 'STAND (স্ট্যান্ড / থামুন)';
-        explanation = '১৭ বা তার বেশি হলে কখনোই হিট নেবেন না। বাস্ট হওয়ার সম্ভাবনা ৭০% এর বেশি।';
+    function calcBJ() {
+      let act = 'HIT (হিট)';
+      let exp = 'হিট নিয়ে স্কোর বাড়ানোর চেষ্টা করুন।';
+      const weak = ['4', '5', '6'].includes(dCard);
+      if (pHand === '17+' || pHand === 'A,8+' || pHand === '10,10') {
+        act = 'STAND (স্ট্যান্ড / থামুন)';
+        exp = 'আপনার স্কোর যথেষ্ট শক্তিশালী। বাড়তি কার্ড টানবেন না।';
+      } else if (pHand === '13-16' && ['2','3','4','5','6'].includes(dCard)) {
+        act = 'STAND (স্ট্যান্ড / থামুন)';
+        exp = 'ডিলারের কার্ড দুর্বল। নিজে বাস্ট না হয়ে ডিলারকে বাস্ট হতে দিন।';
+      } else if (pHand === '10' || pHand === '11') {
+        act = 'DOUBLE (ডাবল করুন)';
+        exp = 'ডাবল ডাউন করে বাজি দ্বিগুণ করার গাণিতিক সুযোগ।';
+      } else if (pHand === '8,8' || pHand === 'A,A') {
+        act = 'SPLIT (স্প্লিট করুন)';
+        exp = '৮ ও Ace জোড়া সবসময় স্প্লিট করতে হয়।';
       }
-    } else if (selectedHandType === 'soft') {
-      if (['A,2', 'A,3'].includes(p)) {
-        if (['5', '6'].includes(d)) { action = 'DOUBLE (ডাবল ডাউন)'; explanation = 'ডিলারের দুর্বল ৫ ও ৬ এর বিপরীতে সফট হ্যান্ড ডাবল করা সেরা।'; }
-        else { action = 'HIT (হিট নিন)'; explanation = 'স্কোর কম, অতিরিক্ত কার্ড টানুন। বাস্ট হওয়ার কোনো ভয় নেই।'; }
-      } else if (['A,4', 'A,5'].includes(p)) {
-        if (['4', '5', '6'].includes(d)) { action = 'DOUBLE (ডাবল ডাউন)'; explanation = 'ডিলারের ৪, ৫ বা ৬ এর বিপরীতে ডাবল করুন।'; }
-        else { action = 'HIT (হিট নিন)'; explanation = 'হিট নিন। আপনার হাতের A আপনাকে বাস্ট হওয়া থেকে রক্ষা করবে।'; }
-      } else if (p === 'A,6') {
-        if (['3', '4', '5', '6'].includes(d)) { action = 'DOUBLE (ডাবল ডাউন)'; explanation = 'সফট ১৭ নিয়ে ডাবল করা গাণিতিকভাবে অত্যন্ত লাভজনক।'; }
-        else { action = 'HIT (হিট নিন)'; explanation = 'সাধারণ হিট নিয়ে স্কোর উন্নত করার চেষ্টা করুন।'; }
-      } else if (p === 'A,7') {
-        if (['3', '4', '5', '6'].includes(d)) { action = 'DOUBLE (ডাবল ডাউন)'; explanation = 'ডিলারের দুর্বল কার্ডের বিপরীতে সফট ১৮ ডাবল করুন।'; }
-        else if (['2', '7', '8'].includes(d)) { action = 'STAND (স্ট্যান্ড)'; explanation = 'সফট ১৮ যথেষ্ট ভালো স্কোর। দাঁড়িয়ে যান।'; }
-        else { action = 'HIT (হিট নিন)'; explanation = 'ডিলারের ৯, ১০ বা A এর বিরুদ্ধে ১৮ স্কোর নিয়ে জেতার সম্ভাবনা কম, তাই হিট নিন।'; }
-      } else { // A,8 or A,9+
-        action = 'STAND (স্ট্যান্ড / থামুন)';
-        explanation = 'সফট ১৯ বা ২০ নিয়ে সবসময় স্ট্যান্ড করুন।';
-      }
-    } else { // Pairs
-      if (['A,A', '8,8'].includes(p)) {
-        action = 'SPLIT (স্প্লিট করুন)';
-        explanation = 'ব্ল্যাকজ্যাকের সুবর্ণ নিয়ম: ৮ ও Ace জোড়া সবসময় স্প্লিট করতে হয়! কখনোই একসাথে রাখবেন না।';
-      } else if (p === '10,10') {
-        action = 'STAND (কখনই স্প্লিট করবেন না!)';
-        explanation = 'আপনার হাতে অলরেডি ২০ পয়েন্ট আছে! এটি ভেঙে দুটি দুর্বল হাতে পরিণত করবেন না। স্ট্যান্ড করুন।';
-      } else if (p === '5,5') {
-        if (['2', '3', '4', '5', '6', '7', '8', '9'].includes(d)) {
-          action = 'DOUBLE (ডাবল করুন, স্প্লিট নয়)';
-          explanation = '৫ এর জোড়া মানে আপনার হাত ১০। এটাকে স্প্লিট না করে ডাবল ডাউন করুন।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'হিট নিন।';
-        }
-      } else if (['2,2', '3,3', '7,7'].includes(p)) {
-        if (['2', '3', '4', '5', '6', '7'].includes(d)) {
-          action = 'SPLIT (স্প্লিট করুন)';
-          explanation = 'ডিলারের ৭ বা তার নিচে থাকলে জোড়া স্প্লিট করুন।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'ডিলারের ৮ বা বেশি থাকলে স্প্লিট না করে হিট নিন।';
-        }
-      } else if (p === '9,9') {
-        if (['7', '10', 'A'].includes(d)) {
-          action = 'STAND (স্ট্যান্ড)';
-          explanation = 'ডিলারের ৭ থাকলে ১৮ দিয়ে জেতার সম্ভাবনা বেশি। ডিলারের ১০ বা A থাকলেও স্ট্যান্ড নিরাপদ।';
-        } else {
-          action = 'SPLIT (স্প্লিট করুন)';
-          explanation = 'ডিলারের অন্যান্য সব কার্ডের বিপরীতে ৯ এর জোড়া স্প্লিট করুন।';
-        }
-      } else {
-        if (isDealerBustCard) {
-          action = 'SPLIT (স্প্লিট করুন)';
-          explanation = 'ডিলারের দুর্বল কার্ডের বিরুদ্ধে স্প্লিট করে দুটি পৃথক হাত খেলুন।';
-        } else {
-          action = 'HIT (হিট নিন)';
-          explanation = 'স্প্লিট না করে সাধারণ হিট নিন।';
-        }
-      }
+      document.getElementById('bjActionText').textContent = act;
+      document.getElementById('bjActionExplanation').textContent = exp;
     }
 
-    bjActionText.textContent = action;
-    bjActionExplanation.textContent = explanation;
-    bjSummaryPlayer.textContent = p;
-    bjSummaryDealer.textContent = d;
-
-    if (action.includes('DOUBLE')) {
-      bjActionText.className = 'text-3xl md:text-4xl font-black font-mono tracking-wider text-amber-400 my-2';
-      bjDecisionBox.className = 'rounded-2xl p-6 border text-center transition-all duration-300 bg-amber-950/30 border-amber-500/40';
-    } else if (action.includes('STAND')) {
-      bjActionText.className = 'text-3xl md:text-4xl font-black font-mono tracking-wider text-blue-400 my-2';
-      bjDecisionBox.className = 'rounded-2xl p-6 border text-center transition-all duration-300 bg-blue-950/30 border-blue-500/40';
-    } else if (action.includes('SPLIT')) {
-      bjActionText.className = 'text-3xl md:text-4xl font-black font-mono tracking-wider text-purple-400 my-2';
-      bjDecisionBox.className = 'rounded-2xl p-6 border text-center transition-all duration-300 bg-purple-950/30 border-purple-500/40';
-    } else {
-      bjActionText.className = 'text-3xl md:text-4xl font-black font-mono tracking-wider text-emerald-400 my-2';
-      bjDecisionBox.className = 'rounded-2xl p-6 border text-center transition-all duration-300 bg-emerald-950/30 border-emerald-500/40';
-    }
-  }
-
-  evaluateBlackjackStrategy();
-
-
-  // ==========================================
-  // 11. Roulette Gambler's Fallacy Slider
-  // ==========================================
-  const rouletteStreakSlider = document.getElementById('rouletteStreakSlider');
-  const rouletteStreakVal = document.getElementById('rouletteStreakVal');
-
-  if (rouletteStreakSlider) {
-    rouletteStreakSlider.addEventListener('input', (e) => {
-      rouletteStreakVal.textContent = `${e.target.value} বার`;
-    });
-  }
-
-
-  // ==========================================
-  // 12. Martingale Death Simulator Engine
-  // ==========================================
-  const mgBaseBet = document.getElementById('mgBaseBet');
-  const mgBankroll = document.getElementById('mgBankroll');
-  const runMartingaleSimBtn = document.getElementById('runMartingaleSimBtn');
-  const martingaleTableBody = document.getElementById('martingaleTableBody');
-  const martingaleVerdictBox = document.getElementById('martingaleVerdictBox');
-
-  function runMartingaleSimulation() {
-    const base = parseFloat(mgBaseBet.value) || 100;
-    const bankroll = parseFloat(mgBankroll.value) || 5000;
-
-    let html = '';
-    let totalRisked = 0;
-    let wipeoutRound = null;
-
-    for (let r = 1; r <= 8; r++) {
-      const requiredBet = base * Math.pow(2, r - 1);
-      totalRisked += requiredBet;
-      const isBankrupt = totalRisked > bankroll;
-
-      if (isBankrupt && wipeoutRound === null) {
-        wipeoutRound = r;
-      }
-
-      const rowClass = isBankrupt ? 'bg-red-950/40 text-red-300 font-bold' : '';
-
-      html += `
-        <tr class="${rowClass}">
-          <td class="p-2.5">রাউন্ড #${r} ${isBankrupt ? '💥 (দেউলিয়া)' : ''}</td>
-          <td class="p-2.5">৳ ${requiredBet.toLocaleString()}</td>
-          <td class="p-2.5">৳ ${totalRisked.toLocaleString()}</td>
-          <td class="p-2.5 text-emerald-400">+৳ ${base.toLocaleString()}</td>
-        </tr>
-      `;
-    }
-
-    martingaleTableBody.innerHTML = html;
-
-    if (wipeoutRound !== null) {
-      martingaleVerdictBox.innerHTML = `
-        <strong>💥 গাণিতিক রায়:</strong> আপনার ৳ ${bankroll.toLocaleString()} ব্যাংক রোল দিয়ে মাত্র <strong>${wipeoutRound}টি ধারাবাহিক লস</strong> হলেই আপনি ১ পয়সাও ফেরত পাবেন না। মাত্র ৳ ${base} লাভ করার জন্য আপনাকে ৳ ${(base * Math.pow(2, wipeoutRound - 1)).toLocaleString()} বাজি ধরতে হতো, যা অসম্ভব! ক্যাসিনোতে পরপর ৬-৭ বার ভুল হওয়া খুবই সাধারণ ঘটনা।
-      `;
-    } else {
-      martingaleVerdictBox.innerHTML = `
-        <strong>⚠️ সতর্কতা:</strong> টেবিলের বাজি সীমা (Table Maximum Limit) থাকে, যার কারণে ৮-৯ বারের বেশি ডাবল করা ক্যাসিনো কর্তৃপক্ষ এমনিতেই নিষিদ্ধ করে রাখে। তাই মার্টিঙ্গেল ১০০% আত্মঘাতী।
-      `;
-    }
-  }
-
-  runMartingaleSimBtn.addEventListener('click', runMartingaleSimulation);
-  runMartingaleSimulation();
-
-  // Initial update
-  updateCalculatedTargets();
-  renderLiveDashboard();
-});
-
-</script>
+    renderHands();
+    updateTargets();
+    render();
+  </script>
 </body>
 </html>
